@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('includes/head',{ title : "Ayru Jaipur" }) %>
+
+        <!-- home CSS -->
+        <link rel="stylesheet" href="/styles/home.css">
+
+        <!-- slick CSS -->
+        <link rel="stylesheet" type="text/css" href="/slick-1.8.1/slick/slick.css" />
+
+        <link rel="stylesheet" type="text/css" href="/slick-1.8.1/slick/slick-theme.css" />
+
+
+</head>
+
+<body>
+
+    <%- include('includes/header') %>
+
+
+        <!-- Main -->
+        <main>
+
+            <!-- Slider { Slick } -->
+            <div class="your-class conatiner">
+                <div>
+                    <img src="/images/HandPrint.jpg" alt="HandPrint" class="slider-images img-fluid">
+                </div>
+                <div>
+                    <img src="/images/HandPrintLogo.jpg" alt="HandPrintLogo" class="slider-images img-fluid">
+                </div>
+
+            </div>
+
+
+
+            <!-- description of ayru jaipur -->
+            <div class="container description-Section">
+                <div class="row">
+                    <p class="description-Section-main-heading">AYRU JAIPUR WELCOME'S YOU</p>
+                </div>
+                <div class="description-Section-heart-logo">
+                    <img src="/images/Webpage_Logo.jpg" alt="Logo" srcset="" class="img-fluid">
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+            </div>
+
+            <!-- Best and Newest Products -->
+            <div class="container">
+                <div class="products_div ">
+                    <div class="best_products products-sub-div">
+                        <a href="/collections/best-seller" target="_self" rel="noopener noreferrer"><button>Best
+                                Seller</button></a>
+                    </div>
+                    <div class="new_products products-sub-div">
+                        <a href="/collections/just-launched" target="_self" rel="noopener noreferrer"><button>Just
+                                Launched</button></a>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </main>
+
+        <!-- scripts -->
+        <script src="/scripts/home.js"></script>
+        <script src="/slick-1.8.1/slick/slick.min.js"></script>
+</body>
+
+</html>

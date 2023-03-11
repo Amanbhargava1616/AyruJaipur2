@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap");
+
+:root {
+	--mainColor: #ffcd54;
+	--mainHoverColor: #ffb60d;
+	--logoColor: #febd59;
+}
+
+.product_heading_section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+
+
+.view_case_section,
+.product_name {
+	height: 45px;
+	display: flex;
+	align-items: flex-end;
+	width: fit-content;
+}
+
+.product_name {
+	font-size: 1.8rem;
+	font-weight: 600;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	text-transform: capitalize;
+}
+
+.js-btn-view > ul {
+	display: flex;
+	gap: 10px;
+	width: 60px;
+	justify-content: center;
+	border: 1px solid gainsboro;
+	color: gainsboro;
+	cursor: pointer;
+	margin: 0 !important;
+}
+
+.js-btn-view > .active {
+	border-color: #ffb60d;
+	color: #ffb60d;
+	z-index: 10;
+}
+
+.js-col {
+	transition: all ease-in-out 0.8s;
+}
+
+.product-card {
+	padding: 0 !important;
+	transition: all ease 0.45s !important;
+	margin-top: 50px;
+	border-radius: 10px;
+}
+
+.product-card:hover {
+	box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+.product-card__info {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: gray;
+	gap: 5px;
+}
+
+.product-card__name {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	font-weight: 500;
+	font-size: 1.25rem;
+	color: black !important;
+	text-decoration: none;
+}
+
+.product-price-quantity {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+
+
+
+@media screen and (max-width: 991px) {
+	.view_case_section {
+		display: none;
+	}
+}
+

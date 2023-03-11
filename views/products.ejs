@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('includes/head',{ title : "Ayru Jaipur - Products" }) %>
+
+        <!-- products CSS -->
+        <link rel="stylesheet" href="/styles/products.css">
+
+        <!-- slick CSS -->
+        <link rel="stylesheet" type="text/css" href="/slick-1.8.1/slick/slick.css" />
+
+        <link rel="stylesheet" type="text/css" href="/slick-1.8.1/slick/slick-theme.css" />
+
+
+</head>
+
+<body>
+
+    <%- include('includes/header') %>
+
+        <div class="container">
+            <div class="row product_heading_section ">
+                <div class="product_name">
+                    <%= product %>
+                </div>
+                <div class="view_case_section">
+                    <div class="js-btn-view btn-view-2" data-col="2">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="js-btn-view btn-view-3" data-col="3">
+                        <ul class="active">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="js-btn-view btn-view-4" data-col="4">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <% for (const key in list) { %>
+                    <% if (list.hasOwnProperty.call(list, key)) { %>
+                        <% const productItem=list[key]; %>
+
+                            <%- include('includes/product-item.ejs', {productData:productItem,product:product}) %>
+                                <% } %>
+                                    <% } %>
+
+            </div>
+        </div>
+
+
+        <script src="/scripts/products.js"></script>
+
+</body>
+
+</html>

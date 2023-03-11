@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap");
+
+:root {
+	--mainColor: #ffcd54;
+	--mainHoverColor: #ffb60d;
+	--logoColor: #febd59;
+}
+
+body {
+	position: relative;
+	padding: 0 !important;
+}
+
+header {
+	height: fit-content !important;
+	padding: 5px 0;
+	position: sticky;
+	top: 0;
+	left: 0;
+	z-index: 99;
+	background-color: white;
+	margin: 0px !important;
+}
+
+/* .site-header__logo {
+	width: fit-content !important;
+} */
+
+.site-header__logo img {
+	width: 100px;
+	border-radius: 50%;
+}
+
+.site-header__logo-link {
+	text-decoration: none;
+	color: var(--mainColor);
+	transition: all 0.7s;
+}
+
+.site-header__logo-link:hover {
+	text-decoration: none;
+	color: var(--mainHoverColor);
+}
+
+#menu_button {
+	color: var(--mainColor);
+	border: none;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	transition: all 0.7s;
+	font-weight: 600;
+}
+
+#menu_button:hover {
+	color: var(--mainHoverColor);
+}
+
+.menu_bar {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 5px;
+	height: 100%;
+}
+
+.menu_bars {
+	border-radius: 1px;
+	height: 2.5px;
+	width: 18px;
+	background-color: var(--mainColor);
+}
+
+.second_menu_bar {
+	width: 20px;
+}
+
+.third_menu_bar {
+	width: 22px;
+}
+
+.modalRegisterBtn {
+	/* border: #ffb282 solid 2px; */
+	border: none;
+	border-radius: 5px;
+	padding: 5px 10px;
+	transition: all 0.7s;
+	color: var(--mainColor);
+	background-color: transparent;
+	font-weight: 600;
+}
+
+.modalRegisterBtn:hover {
+	/* background-color: #f8eedf; */
+	color: var(--mainHoverColor);
+}
+
+#backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(128, 128, 128, 0.429);
+	display: none;
+	z-index: +998;
+}
+
+#registerModal {
+	position: fixed;
+	top: 20%;
+	left: 50%;
+	transform: translateX(-50%);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+	display: none;
+	z-index: +999;
+	border-radius: 6px;
+	background-color: white;
+	padding: 40px;
+}
+
+.modalheading {
+	color: var(--mainColor);
+	font-size: 1.5rem;
+	font-weight: 700;
+}
+
+.modalbody > form {
+	display: flex;
+	flex-direction: column !important;
+	align-items: center;
+	gap: 15px !important;
+}
+
+.modalbody input {
+	background-color: transparent;
+	border: transparent;
+	border-bottom: black solid 1px;
+}
+
+.modalbody input:focus {
+	border: transparent !important;
+	border-bottom: #bbb solid 1px;
+}
+
+@media screen and (min-width: 768px) {
+	.registerSection {
+		padding-right: 100px !important;
+	}
+}

@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap");
+
+:root {
+	--mainColor: #ffcd54;
+	--mainHoverColor: #ffb60d;
+	--logoColor: #febd59;
+}
+
+/* main body */
+
+.slider-images {
+	/* width: 1000px; */
+	margin: 0 auto;
+}
+
+.slick-slide,
+.slick-current,
+.slick-active {
+	z-index: 2 !important;
+}
+
+.description-Section {
+	display: flex;
+	flex-direction: column;
+}
+
+.description-Section .row {
+	display: grid;
+	place-content: center;
+	text-align: center;
+}
+
+.description-Section-main-heading {
+	width: 300px !important;
+	font-size: 2rem;
+	font-weight: 700;
+}
+
+.description-Section-heart-logo {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	translate: -50px;
+}
+
+.description-Section-heart-logo > img {
+	border-radius: 50%;
+	width: 130px;
+	height: 130px;
+
+	translate: 100px;
+}
+
+.fa-heart {
+	font-size: 18rem;
+	color: var(--logoColor);
+	width: 288px !important;
+}
+
+.products_div {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.products-sub-div {
+	width: 600px;
+	height: 500px;
+	background-color: rgb(251, 210, 210);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+	.registerSection {
+		padding-right: 100px !important;
+	}
+}
