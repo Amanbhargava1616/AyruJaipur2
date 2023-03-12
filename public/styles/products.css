@@ -12,8 +12,6 @@
 	align-items: center;
 }
 
-
-
 .view_case_section,
 .product_name {
 	height: 45px;
@@ -85,12 +83,8 @@
 	justify-content: space-evenly;
 }
 
-
-
-
 @media screen and (max-width: 991px) {
 	.view_case_section {
 		display: none;
 	}
 }
-
