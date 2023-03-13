@@ -12,21 +12,21 @@ footer {
 	background-color: rgb(211, 27, 211);
 }
 
-a {
+footer a {
 	font-size: 1.25rem;
 	color: whitesmoke;
 	text-decoration: none;
 }
 
-a:hover {
+footer .contact_us_section a:hover {
 	color: whitesmoke !important;
 }
 
-ul {
+footer ul {
 	color: whitesmoke;
 }
 
-ul li > a {
+footer ul li > a {
 	font-size: 1rem;
 	color: rgb(190, 190, 190) !important;
 }

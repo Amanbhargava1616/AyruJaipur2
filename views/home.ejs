@@ -21,10 +21,10 @@
 
 
         <!-- Main -->
-        <main>
+        <main class="container">
 
             <!-- Slider { Slick } -->
-            <div class="your-class conatiner">
+            <div class="your-class">
                 <div>
                     <img src="/images/HandPrint.jpg" alt="HandPrint" class="slider-images img-fluid">
                 </div>
@@ -37,7 +37,7 @@
 
 
             <!-- description of ayru jaipur -->
-            <div class="container description-Section">
+            <div class="description-Section">
                 <div class="row">
                     <p class="description-Section-main-heading">AYRU JAIPUR WELCOME'S YOU</p>
                 </div>
@@ -48,15 +48,79 @@
             </div>
 
             <!-- Best and Newest Products -->
-            <div class="container">
-                <div class="products_div ">
-                    <div class="best_products products-sub-div">
-                        <a href="/collections/best-seller" target="_self" rel="noopener noreferrer"><button>Best
-                                Seller</button></a>
+            <div class="products_div row justify-content-evenly">
+                <div class="best_products products-sub-div col-md-5"
+                    style="background-image: url('<%=homepageList.bestseller %>');">
+                    <img src="<%=homepageList.bestseller %>" style="visibility: hidden;" class="img-fluid" />
+                    <a href="/collections/best-seller" target="_self" rel="noopener noreferrer">
+                        <div>
+                            <button>
+                                Best Seller
+                            </button>
+                        </div>
+                    </a>
+                </div>
+                <div class="new_products products-sub-div col-md-5"
+                    style="background-image: url('<%=homepageList.justlaunched %>');">
+                    <img src="<%=homepageList.justlaunched %>" style="visibility: hidden;" class="img-fluid" />
+                    <a href="/collections/just-launched" target="_self" rel="noopener noreferrer">
+                        <div>
+                            <button>
+                                Just Launched
+                            </button>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="view_all_products_div">
+                <div class="products_div row justify-content-evenly">
+                    <div class="best_products products-sub-div col-md-5"
+                        style="background-image: url('<%=homepageList.bedsheet %>');">
+                        <img src="<%=homepageList.bedsheet %>" style="visibility: hidden;" class="img-fluid" />
+                        <a href="/collections/bedsheets" target="_self" rel="noopener noreferrer">
+                            <div>
+                                <button>
+                                    Bedsheet
+                                </button>
+                            </div>
+                        </a>
                     </div>
-                    <div class="new_products products-sub-div">
-                        <a href="/collections/just-launched" target="_self" rel="noopener noreferrer"><button>Just
-                                Launched</button></a>
+                    <div class="new_products products-sub-div col-md-5"
+                        style="background-image: url('<%=homepageList.bedcover %>');">
+                        <img src="<%=homepageList.bedcover %>" style="visibility: hidden;" class="img-fluid" />
+                        <a href="/collections/bedcovers" target="_self" rel="noopener noreferrer">
+                            <div>
+                                <button>
+                                    Bedcover
+                                </button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="products_div row justify-content-evenly">
+                    <div class="best_products products-sub-div col-md-5"
+                        style="background-image: url('<%=homepageList.quilt %>');">
+                        <img src="<%=homepageList.quilt %>" style="visibility: hidden;" class="img-fluid" />
+                        <a href="/collections/quilts" target="_self" rel="noopener noreferrer">
+                            <div>
+                                <button>
+                                    Quilt
+                                </button>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="new_products products-sub-div col-md-5"
+                        style="background-image: url('<%=homepageList.justlaunched %>');">
+                        <img src="<%=homepageList.justlaunched %>" style="visibility: hidden;" class="img-fluid" />
+                        <a href="/collections/just-launched" target="_self" rel="noopener noreferrer">
+                            <div>
+                                <button>
+                                    Just Launched
+                                </button>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -42,55 +42,20 @@ router.get( "/", function ( req, res ) {
 router.get( "/home", async function ( req, res ) {                                                  // router.get( "/home", upload.single( 'files' ), async function ( req, res ) {
 
 
-    // reference to a bucket in cloud storage
-    const storageRef = ref( imports.storage, "bedsheets" );
 
+    const docRefHome = doc( imports.db, "ayruJaipur", "homepage" );
+    const docSnapHome = await getDoc( docRefHome );
 
-    // array of objects of all the images in bucket
-    const imgList = await listAll( storageRef )
-        .then( async ( imgRef ) => {
+    if ( docSnapHome.exists() ) {
 
-            const imgArr = await Promise.all( imgRef.items.map( async ( itemRef ) => {
+        console.log( "Document data:", docSnapHome.data() );
+        res.render( 'home', { homepageList: docSnapHome.data() } )
 
-
-                const imgData = await getDownloadURL( itemRef )
-                    .then( ( imgUrl ) => {
-                        // console.log( itemRef.name + " => " + imgUrl );
-                        return ( { imgName: itemRef.name, imgUrl: imgUrl } )
-
-                    } )
-                    .catch( ( error ) => {
-                        console.error( error )
-                    } );
-                return imgData;
-
-            } )
-            )
-            // console.log( imgArr );
-            return imgArr;
-
-
-        } ).catch( ( er2 ) => {
-            console.error( er2 );
-        } );
-
-    console.log( imgList );
-
-
-
-    // reading all the products in db
-    const querySnapshot = await getDocs( collection( imports.db, "ayruJaipur" ) );
-    const tempDoc = [];
-    querySnapshot.forEach( ( doc ) => {
-
-        // doc.data() is never undefined for query doc snapshots
-        console.log( doc.id, " => ", doc.data() );
-        tempDoc.push( { id: doc.id, Data: doc.data() } )
-
-    } );
-    res.render( 'home', { itemList: tempDoc } )
-
-
+    } else {
+        // doc.data() will be undefined in this case
+        res.render( '404' )
+        console.log( "No such document!" );
+    }
 
 } )
 
