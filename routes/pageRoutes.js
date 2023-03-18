@@ -98,7 +98,7 @@ router.get( "/collections/:product", async function ( req, res ) {
     const docSnap = await getDoc( doc( imports.db, "ayruJaipur", product ) );
     if ( docSnap.exists() ) {
 
-        console.log( docSnap.data() );
+        console.table( docSnap.data() );
 
     } else {
         console.log( "No such document!" );
@@ -120,10 +120,12 @@ router.get( "/collections/:product", async function ( req, res ) {
                 const imgData = await getDownloadURL( itemRef )
                     .then( async ( imgUrl ) => {
 
+                        const item = docSnap.data()[ itemRef.name ]
                         // console.log( itemRef.name + " => " + imgUrl );
-                        // console.log( docSnap.data()[ itemRef.name ] );
+                        // console.table( item );
+                        let totalQuantityAvailable = parseInt( item[ 'king' ][ 1 ] ) + parseInt( item[ 'queen' ][ 1 ] ) + parseInt( item[ 'single' ][ 1 ] )
 
-                        return ( { itemId: itemRef.name, itemName: docSnap.data()[ itemRef.name ][ 0 ], itemImgUrl: imgUrl, itemPrice: docSnap.data()[ itemRef.name ][ 1 ], itemAvaibility: docSnap.data()[ itemRef.name ][ 2 ] } )
+                        return ( { itemId: itemRef.name, itemName: item.name, itemImgUrl: imgUrl, itemPrice: item.baseprice, itemAvaibility: totalQuantityAvailable } )
 
                         // return ( { imgID: itemRef.name, itemImgUrl: imgUrl } )
 
@@ -145,7 +147,7 @@ router.get( "/collections/:product", async function ( req, res ) {
             console.error( er2 );
         } );
 
-    console.log( itemList );
+    console.table( itemList );
 
 
 
@@ -153,6 +155,34 @@ router.get( "/collections/:product", async function ( req, res ) {
 
     res.render( "products", { list: itemList, product: product } );
 } )
+
+
+// specific product
+router.get( "/collections/:product", async function ( req, res ) {
+
+    const product = req.params.product;
+} );
+
+
+// refunf policy page
+router.get( "/return&refund-policy", async function ( req, res ) {
+
+    res.render( 'refundReturnPolicy' );
+} );
+
+
+// cancelation page
+router.get( "/Cancellation", async function ( req, res ) {
+
+    res.render( 'Cancellation' );
+} );
+
+
+// shipping page
+router.get( "/Shipping", async function ( req, res ) {
+
+    res.render( 'Shipping' );
+} );
 
 
 

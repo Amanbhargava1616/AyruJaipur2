@@ -24,7 +24,7 @@
         <main class="container">
 
             <!-- Slider { Slick } -->
-            <div class="your-class">
+            <div class="your-class section">
                 <div>
                     <img src="/images/HandPrint.jpg" alt="HandPrint" class="slider-images img-fluid">
                 </div>
@@ -36,45 +36,50 @@
 
 
 
-            <!-- description of ayru jaipur -->
-            <div class="description-Section">
-                <div class="row">
-                    <p class="description-Section-main-heading">AYRU JAIPUR WELCOME'S YOU</p>
+            <div class="section info-section">
+
+                <!-- description of ayru jaipur -->
+                <div class="description-Section">
+                    <div class="row">
+                        <p class="description-Section-main-heading">AYRU JAIPUR WELCOME'S YOU</p>
+                    </div>
+                    <div class="description-Section-heart-logo">
+                        <img src="/images/Webpage_Logo.jpg" alt="Logo" srcset="" class="img-fluid">
+                        <i class="fa-regular fa-heart"></i>
+                    </div>
                 </div>
-                <div class="description-Section-heart-logo">
-                    <img src="/images/Webpage_Logo.jpg" alt="Logo" srcset="" class="img-fluid">
-                    <i class="fa-regular fa-heart"></i>
+
+                <!-- Best and Newest Products -->
+                <div class="products_div row justify-content-evenly">
+                    <div class="best_products products-sub-div col-md-5"
+                        style="background-image: url('<%=homepageList.bestseller %>');">
+                        <img src="<%=homepageList.bestseller %>" style="visibility: hidden;" class="img-fluid" />
+                        <a href="/collections/best-seller" target="_self" rel="noopener noreferrer">
+                            <div>
+                                <button>
+                                    Best Seller
+                                </button>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="new_products products-sub-div col-md-5"
+                        style="background-image: url('<%=homepageList.justlaunched %>');">
+                        <img src="<%=homepageList.justlaunched %>" style="visibility: hidden;" class="img-fluid" />
+                        <a href="/collections/just-launched" target="_self" rel="noopener noreferrer">
+                            <div>
+                                <button>
+                                    Just Launched
+                                </button>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Best and Newest Products -->
-            <div class="products_div row justify-content-evenly">
-                <div class="best_products products-sub-div col-md-5"
-                    style="background-image: url('<%=homepageList.bestseller %>');">
-                    <img src="<%=homepageList.bestseller %>" style="visibility: hidden;" class="img-fluid" />
-                    <a href="/collections/best-seller" target="_self" rel="noopener noreferrer">
-                        <div>
-                            <button>
-                                Best Seller
-                            </button>
-                        </div>
-                    </a>
-                </div>
-                <div class="new_products products-sub-div col-md-5"
-                    style="background-image: url('<%=homepageList.justlaunched %>');">
-                    <img src="<%=homepageList.justlaunched %>" style="visibility: hidden;" class="img-fluid" />
-                    <a href="/collections/just-launched" target="_self" rel="noopener noreferrer">
-                        <div>
-                            <button>
-                                Just Launched
-                            </button>
-                        </div>
-                    </a>
-                </div>
-            </div>
 
+            <div class="view_all_products_div section">
 
-            <div class="view_all_products_div">
+                <h1>View All products</h1>
                 <div class="products_div row justify-content-evenly">
                     <div class="best_products products-sub-div col-md-5"
                         style="background-image: url('<%=homepageList.bedsheet %>');">
@@ -112,12 +117,12 @@
                         </a>
                     </div>
                     <div class="new_products products-sub-div col-md-5"
-                        style="background-image: url('<%=homepageList.justlaunched %>');">
-                        <img src="<%=homepageList.justlaunched %>" style="visibility: hidden;" class="img-fluid" />
+                        style="background-image: url('<%=homepageList.dohar %>');">
+                        <img src="<%=homepageList.dohar %>" style="visibility: hidden;" class="img-fluid" />
                         <a href="/collections/just-launched" target="_self" rel="noopener noreferrer">
                             <div>
                                 <button>
-                                    Just Launched
+                                    Dohar
                                 </button>
                             </div>
                         </a>
@@ -131,9 +136,11 @@
 
         </main>
 
-        <!-- scripts -->
-        <script src="/scripts/home.js"></script>
-        <script src="/slick-1.8.1/slick/slick.min.js"></script>
+        <%- include("includes/footer") %>
+
+            <!-- scripts -->
+            <script src="/scripts/home.js"></script>
+            <script src="/slick-1.8.1/slick/slick.min.js"></script>
 </body>
 
 </html>
