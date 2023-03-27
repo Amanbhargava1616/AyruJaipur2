@@ -7,6 +7,8 @@ import { collection, doc, getDocs, getDoc, setDoc } from "firebase/firestore";
 // module imports
 import { Router } from "express";
 
+import { formateCurrency } from "../public/scripts/currencyFormatter.js"
+
 
 // importing multer
 // import multer, { diskStorage } from "multer";
@@ -125,7 +127,7 @@ router.get( "/collections/:product", async function ( req, res ) {
                         // console.table( item );
                         let totalQuantityAvailable = parseInt( item[ 'king' ][ 1 ] ) + parseInt( item[ 'queen' ][ 1 ] ) + parseInt( item[ 'single' ][ 1 ] )
 
-                        return ( { itemId: itemRef.name, itemName: item.name, itemImgUrl: imgUrl, itemPrice: item.baseprice, itemAvaibility: totalQuantityAvailable } )
+                        return ( { itemId: itemRef.name, itemName: item.name, itemImgUrl: imgUrl, itemPrice: formateCurrency( item.baseprice ), itemAvaibility: totalQuantityAvailable } )
 
                         // return ( { imgID: itemRef.name, itemImgUrl: imgUrl } )
 

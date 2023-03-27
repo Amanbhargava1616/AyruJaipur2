@@ -1,8 +1,3 @@
-// firebase imports 
-import { doc, setDoc } from "firebase/firestore";
-
-
-
 // module imports
 import express, { urlencoded } from "express";
 import { dirname, join } from "path";
