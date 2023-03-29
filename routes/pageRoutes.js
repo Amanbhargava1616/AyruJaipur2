@@ -127,7 +127,20 @@ router.get( "/collections", function ( req, res ) {
     res.render( "collections" );
 } )
 
-router.get( "/discounted-items", function ( req, res ) {
+router.get( "/discounted-items", async function ( req, res ) {
+
+
+    const saleSnapshot = await getDocs( collection( imports.db, 'sale' ) );
+
+    saleSnapshot.forEach( async ( doc ) => {
+        // doc.data() is never undefined for query doc snapshots
+
+        const saleItemSnap = await getDoc( doc.data().itemref );
+        const saleItem = { ...saleItemSnap.data(), discount: doc.data().discount }
+        console.log( saleItem )
+
+    } );
+
 
 } )
 
