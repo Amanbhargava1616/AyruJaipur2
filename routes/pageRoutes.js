@@ -82,9 +82,53 @@ router.post( "/register", async function ( req, res ) {
 } )
 
 
+// client love
+router.get( "/clientLove", function ( req, res ) {
+
+
+    const listRefClientLove = ref( imports.storage, 'client love' );
+
+    listAll( listRefClientLove )
+        .then( async ( clientLoveRes ) => {
+
+            const clientLoveImagesList = await Promise.all( clientLoveRes.items.map( async ( clientLoveRes ) => {
+
+
+                const clientLoveUrl = await getDownloadURL( clientLoveRes )
+                    .then( ( url ) => {
+                        // `url` is the download URL for 'images/*.jpg'
+
+                        return url;
+                    } )
+                    .catch( ( er5 ) => {
+                        console.error( er5 )
+                    } );
+                return clientLoveUrl;
+            } ) )
+            console.log( clientLoveImagesList );
+
+            res.render( 'clientLove', { clientLoveImagesList: clientLoveImagesList } );
+
+
+        } ).catch( ( er4 ) => {
+
+            console.error( er4 )
+            res.render( '500' )
+
+        } );
+} )
+
+
+
+
+
 // rendering collections page
 router.get( "/collections", function ( req, res ) {
     res.render( "collections" );
+} )
+
+router.get( "/discounted-items", function ( req, res ) {
+    
 } )
 
 
@@ -150,10 +194,6 @@ router.get( "/collections/:product", async function ( req, res ) {
 
     console.table( itemList );
 
-
-
-
-
     res.render( "products", { list: itemList, product: product } );
 } )
 
@@ -200,47 +240,6 @@ router.get( "/collections/:category/product/:item", async function ( req, res ) 
 
 } );
 
-
-
-// client love
-router.get( "/clientLove", function ( req, res ) {
-
-
-
-    const listRefClientLove = ref( imports.storage, 'client love' );
-
-    listAll( listRefClientLove )
-        .then( async ( clientLoveRes ) => {
-
-            const clientLoveImagesList = await Promise.all( clientLoveRes.items.map( async ( clientLoveRes ) => {
-
-
-                const clientLoveUrl = await getDownloadURL( clientLoveRes )
-                    .then( ( url ) => {
-                        // `url` is the download URL for 'images/*.jpg'
-
-                        return url;
-                    } )
-                    .catch( ( er5 ) => {
-                        console.error( er5 )
-                    } );
-                return clientLoveUrl;
-            } ) )
-            console.log( clientLoveImagesList );
-
-            res.render( 'clientLove', { clientLoveImagesList: clientLoveImagesList } );
-
-
-        } ).catch( ( er4 ) => {
-
-            console.error( er4 )
-            res.render( '500' )
-
-        } );
-
-
-
-} )
 
 
 // refunf policy page
