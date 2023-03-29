@@ -139,8 +139,7 @@ router.get( "/collections/:product", async function ( req, res ) {
                     } );
                 return imgData;
 
-            } )
-            )
+            } ) )
             // console.log( imgArr );
             return imgArr;
 
@@ -160,10 +159,88 @@ router.get( "/collections/:product", async function ( req, res ) {
 
 
 // specific product
-router.get( "/collections/:product", async function ( req, res ) {
+router.get( "/collections/:category/product/:item", async function ( req, res ) {
 
-    const product = req.params.product;
+    const itemID = req.params.item;
+    const category = req.params.category;
+
+    // reading all the data of products in db
+    const docSnap = await getDoc( doc( imports.db, "ayruJaipur", category ) );
+    if ( docSnap.exists() ) {
+        console.table( docSnap.data()[ itemID ] );
+
+    } else {
+        console.log( "No such document!" );
+    }
+
+
+
+    // reference to a bucket in cloud storage
+    const imgRef = ref( imports.storage, category + "/" + itemID );
+    const imgURL = await getDownloadURL( imgRef )
+        .then( ( url ) => {
+            // `url` is the download URL for 'images/stars.jpg'
+
+            // console.log( url );
+            return url;
+        } )
+        .catch( ( er3 ) => {
+            console.error( er3 )
+        } );
+
+    const itemData = { ...docSnap.data()[ itemID ], url: imgURL };
+
+    itemData.single[ 0 ] = formateCurrency( itemData.single[ 0 ] )
+    itemData.queen[ 0 ] = formateCurrency( itemData.queen[ 0 ] )
+    itemData.king[ 0 ] = formateCurrency( itemData.king[ 0 ] )
+
+    console.log( itemData );
+
+    res.render( 'item', { itemData: itemData } )
+
 } );
+
+
+
+// client love
+router.get( "/clientLove", function ( req, res ) {
+
+
+
+    const listRefClientLove = ref( imports.storage, 'client love' );
+
+    listAll( listRefClientLove )
+        .then( async ( clientLoveRes ) => {
+
+            const clientLoveImagesList = await Promise.all( clientLoveRes.items.map( async ( clientLoveRes ) => {
+
+
+                const clientLoveUrl = await getDownloadURL( clientLoveRes )
+                    .then( ( url ) => {
+                        // `url` is the download URL for 'images/*.jpg'
+
+                        return url;
+                    } )
+                    .catch( ( er5 ) => {
+                        console.error( er5 )
+                    } );
+                return clientLoveUrl;
+            } ) )
+            console.log( clientLoveImagesList );
+
+            res.render( 'clientLove', { clientLoveImagesList: clientLoveImagesList } );
+
+
+        } ).catch( ( er4 ) => {
+
+            console.error( er4 )
+            res.render( '500' )
+
+        } );
+
+
+
+} )
 
 
 // refunf policy page

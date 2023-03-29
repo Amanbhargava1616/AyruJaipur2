@@ -1,0 +1,12 @@
+.itemImage {
+	width: 100%;
+}
+
+.priceBtn {
+	background: yellow;
+	border: none;
+}
+
+.active {
+	border: black 1px solid;
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('includes/head',{ title : "Ayru Jaipur - Collections" }) %>
+
+        <!-- item CSS -->
+        <link rel="stylesheet" href="/styles/item.css">
+
+        <!-- slick CSS -->
+        <link rel="stylesheet" type="text/css" href="/slick-1.8.1/slick/slick.css" />
+
+        <link rel="stylesheet" type="text/css" href="/slick-1.8.1/slick/slick-theme.css" />
+
+</head>
+
+<body>
+
+    <%- include('includes/header') %>
+
+        <main class="container">
+            <div class="row">
+                <div class="col-lg-6 p-lg-5">
+                    <img src="<%= itemData.url %>" alt="<%= itemData.name %>" class="itemImage">
+                </div>
+                <div class="col-lg-6 p-lg-5">
+                    <h1 class="row itemName">
+                        <%= itemData.name %>
+                    </h1>
+                    <p class="row itemPriceQuantity">
+                        <span class="col-6" id="itemPrice">
+                            <%= itemData.single[0] %>
+                        </span>
+                        <span class="col-6" id="itemquantity">
+                            <%= itemData.single[1] %> available
+                        </span>
+                    </p>
+
+                    <p class="row itemStyle">
+                    <div class="row">
+                        STYLE
+                    </div>
+                    <div class="row">
+                        <button class="col-3 me-2 active priceBtn" data-style="single"
+                            data-price="<%=itemData.single[0]%>" data-quantity="<%=itemData.single[1]%>">
+                            Single <br>(60*90 inch)
+                        </button>
+                        <button class="col-3 me-2 priceBtn" data-style="queen" data-price="<%=itemData.queen[0]%>"
+                            data-quantity="<%=itemData.queen[1]%>">
+                            Queen <br> (90*108 inch)
+                        </button>
+                        <button class="col-3 me-2 priceBtn" data-style="king" data-price="<%=itemData.king[0]%>"
+                            data-quantity="<%=itemData.king[1]%>">
+                            King <br>(108*108 inch)
+                        </button>
+
+                    </div>
+
+                    </p>
+                </div>
+            </div>
+
+        </main>
+
+        <%- include("includes/footer") %>
+
+            <script src="/scripts/item.js"></script>
+</body>
+
+</html>

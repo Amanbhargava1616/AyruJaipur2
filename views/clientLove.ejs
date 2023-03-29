@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('includes/head',{ title : "Ayru Jaipur - Client Love" }) %>
+
+        <!-- clientLove CSS -->
+        <link rel="stylesheet" href="/styles/home.css">
+
+</head>
+
+<body>
+
+    <%- include('includes/header') %>
+
+        <main class="container">
+
+            <div class="row text-center">
+                <h1 class="homeHeading">
+                    Client Love
+                </h1>
+            </div>
+            <div class="row text-center clientLove_text mb-5">
+                A corner of loveliness, Indeed! #ClientHome Keep Spreading the Love<i
+                    class="fa-solid fa-heart fa-heart-clientlove fa-beat" style="color: #ff3d3d;"></i>
+            </div>
+            <div class="row">
+                <% for (let imageURL of clientLoveImagesList) { %>
+                    <img src="<%= imageURL %>" alt="" srcset="" class="img-fluid col-lg-4 col-md-6 col-12 mb-4">
+                    <% } %>
+            </div>
+        </main>
+
+        <%- include("includes/footer") %>
+
+</body>
+
+</html>
