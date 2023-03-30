@@ -8,6 +8,7 @@ import { collection, doc, getDocs, getDoc, setDoc } from "firebase/firestore";
 import { Router } from "express";
 
 import { formateCurrency } from "../public/scripts/currencyFormatter.js"
+import { calculateDiscount } from "../public/scripts/calculateDiscount.js"
 
 
 // importing multer
@@ -127,20 +128,35 @@ router.get( "/collections", function ( req, res ) {
     res.render( "collections" );
 } )
 
+
+
 router.get( "/discounted-items", async function ( req, res ) {
 
 
     const saleSnapshot = await getDocs( collection( imports.db, 'sale' ) );
 
-    saleSnapshot.forEach( async ( doc ) => {
+    const saleItemList = await Promise.all( saleSnapshot.docs.map( async ( doc ) => {
         // doc.data() is never undefined for query doc snapshots
-
         const saleItemSnap = await getDoc( doc.data().itemref );
-        const saleItem = { ...saleItemSnap.data(), discount: doc.data().discount }
+        const saleItem = { ...saleItemSnap.data(), discount: doc.data().discount };
+
+
+
+        // saleItem.single.push( calculateDiscount( saleItem.single[ 0 ], saleItem.discount ) )
+        // saleItem.queen.push( calculateDiscount( saleItem.queen[ 0 ], saleItem.discount ) )
+        // saleItem.king.push( calculateDiscount( saleItem.king[ 0 ], saleItem.discount ) )
+        // saleItem.single[ 0 ] = formateCurrency( saleItem.single[ 0 ] )
+        // saleItem.king[ 0 ] = formateCurrency( saleItem.king[ 0 ] )
+        // saleItem.queen[ 0 ] = formateCurrency( saleItem.queen[ 0 ] )
+        saleItem.baseprice = formateCurrency( saleItem.baseprice );
         console.log( saleItem )
 
-    } );
+        return saleItem;
 
+    } ) );
+
+
+    console.log( saleItemList );
 
 } )
 
@@ -168,10 +184,13 @@ router.get( "/collections/:product", async function ( req, res ) {
                 console.error( er2 )
             } );
 
-        let totalQuantityAvailable = parseInt( doc.data().king[ 1 ] ) + parseInt( doc.data().queen[ 1 ] ) + parseInt( doc.data().single[ 1 ] )
+        if ( product == 'bedsheets' ) {
+            var totalQuantityAvailable = parseInt( doc.data().king[ 1 ] ) + parseInt( doc.data().queen[ 1 ] ) + parseInt( doc.data().single[ 1 ] )
+            return ( { itemId: doc.id, itemName: doc.data().name, itemImgUrl: imgURLProduct, itemPrice: formateCurrency( doc.data().baseprice ), itemAvaibility: totalQuantityAvailable } )
 
-        return ( { itemId: doc.id, itemName: doc.data().name, itemImgUrl: imgURLProduct, itemPrice: formateCurrency( doc.data().baseprice ), itemAvaibility: totalQuantityAvailable } )
-
+        }
+        else
+            return ( { itemId: doc.id, itemName: doc.data().name, itemImgUrl: imgURLProduct, itemPrice: formateCurrency( doc.data().baseprice ), itemAvaibility: doc.data().quantity } )
 
     } ) );
 
@@ -181,7 +200,42 @@ router.get( "/collections/:product", async function ( req, res ) {
 } )
 
 
-// specific product
+// specific product for bedsheet
+router.get( "/collections/bedsheets/product/:item", async function ( req, res ) {
+
+    const itemID = req.params.item;
+
+    // reading all the data of products in db
+    const itemRef = doc( imports.db, 'bedsheets', itemID );
+    const itemSnap = await getDoc( itemRef );
+
+    // reference to a bucket in cloud storage
+    const imgRef = ref( imports.storage, 'bedsheets' + "/" + itemID );
+    const imgURL = await getDownloadURL( imgRef )
+        .then( ( url ) => {
+            // `url` is the download URL for 'images/stars.jpg'
+
+            // console.log( url );
+            return url;
+        } )
+        .catch( ( er3 ) => {
+            console.error( er3 )
+        } );
+
+    const itemData = { ...itemSnap.data(), url: imgURL };
+
+    itemData.single[ 0 ] = formateCurrency( itemData.single[ 0 ] )
+    itemData.queen[ 0 ] = formateCurrency( itemData.queen[ 0 ] )
+    itemData.king[ 0 ] = formateCurrency( itemData.king[ 0 ] )
+
+    console.log( itemData );
+
+    res.render( 'bedsheet', { itemData: itemData } )
+
+} );
+
+
+// specific product for category
 router.get( "/collections/:category/product/:item", async function ( req, res ) {
 
     const itemID = req.params.item;
@@ -206,9 +260,7 @@ router.get( "/collections/:category/product/:item", async function ( req, res ) 
 
     const itemData = { ...itemSnap.data(), url: imgURL };
 
-    itemData.single[ 0 ] = formateCurrency( itemData.single[ 0 ] )
-    itemData.queen[ 0 ] = formateCurrency( itemData.queen[ 0 ] )
-    itemData.king[ 0 ] = formateCurrency( itemData.king[ 0 ] )
+    itemData.baseprice = formateCurrency( itemData.baseprice );
 
     console.log( itemData );
 

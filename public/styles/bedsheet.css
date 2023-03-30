@@ -2,8 +2,11 @@
 	width: 100%;
 }
 
-.size {
+.priceBtn {
 	background: yellow;
 	border: none;
+}
+
+.active {
 	border: black 1px solid;
 }
