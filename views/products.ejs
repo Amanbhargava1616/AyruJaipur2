@@ -7,11 +7,6 @@
         <!-- products CSS -->
         <link rel="stylesheet" href="/styles/products.css">
 
-        <!-- slick CSS -->
-        <link rel="stylesheet" type="text/css" href="/slick-1.8.1/slick/slick.css" />
-
-        <link rel="stylesheet" type="text/css" href="/slick-1.8.1/slick/slick-theme.css" />
-
 
 </head>
 
@@ -52,10 +47,13 @@
                 <% for (const key in list) { %>
                     <% if (list.hasOwnProperty.call(list, key)) { %>
                         <% const productItem=list[key]; %>
-
-                            <%- include('includes/product-item.ejs', {productData:productItem,product:product}) %>
-                                <% } %>
-                                    <% } %>
+                            <% if(product=='Discounted Items' ){ %>
+                                <%- include('includes/sale-product-item.ejs', {productData:productItem,product:product}) %>
+                                    <% } else{ %>
+                                        <%-include('includes/product-item.ejs',{productData:productItem,product:product})%>
+                                            <% } %>
+                                                <% } %>
+                                                    <% } %>
 
             </div>
         </div>

@@ -8,7 +8,7 @@ import { Router } from "express";
 import { formateCurrency } from "../public/scripts/currencyFormatter.js"
 import { calculateDiscount } from "../public/scripts/calculateDiscount.js"
 
-// class for Non-Sale product
+// class for Non-Sale item for non sale list
 class nonSaleItemData {
     constructor( ID, name, imgUrl, baseprice, qunatity ) {
         this.itemId = ID;
@@ -22,18 +22,41 @@ class nonSaleItemData {
 }
 
 
-// class for Sale product
+// class for Sale item for sale list
+// class for specific sale item 
 class saleItemData {
-    constructor( ID, name, imgUrl, baseprice, qunatity, discount, category ) {
+    constructor( ID, name, imgUrl, baseprice, qunatity, discount ) {
         this.itemId = ID;
         this.itemName = name;
         this.itemImgUrl = imgUrl;
         this.itemPrice = formateCurrency( baseprice );
         this.itemAvaibility = parseInt( qunatity );
-        this.discount = discount;
-        this.category = category;
+        this.discount = parseInt( discount );
+        this.discountPrice = formateCurrency( ( 1 - this.discount * 0.01 ) * parseFloat( baseprice ) )
 
         return this;
+    }
+}
+
+// class for specific sale item bedsheet 
+
+class saleBedsheetData {
+    constructor( name, imgUrl, single, queen, king, discount ) {
+
+        this.itemName = name;
+        this.itemImgUrl = imgUrl;
+
+        // inserting discount price in arrays
+        single.push( formateCurrency( ( 1 - discount * 0.01 ) * parseFloat( single[ 0 ] ) ) )
+        queen.push( formateCurrency( ( 1 - discount * 0.01 ) * parseFloat( queen[ 0 ] ) ) )
+        king.push( formateCurrency( ( 1 - discount * 0.01 ) * parseFloat( king[ 0 ] ) ) )
+
+        // formating the original price
+        single[ 0 ] = formateCurrency( single[ 0 ] );
+        queen[ 0 ] = formateCurrency( queen[ 0 ] );
+        king[ 0 ] = formateCurrency( king[ 0 ] );
+
+        return { ...this, single, queen, king };
     }
 }
 
@@ -138,7 +161,7 @@ router.get( "/collections", function ( req, res ) {
 } )
 
 
-
+// rendering page for sale items
 router.get( "/discounted-items", async function ( req, res ) {
 
 
@@ -147,8 +170,7 @@ router.get( "/discounted-items", async function ( req, res ) {
     const saleItemList = await Promise.all( saleSnapshot.docs.map( async ( doc ) => {
         // doc.data() is never undefined for query doc snapshots
 
-        const saleItemCategory = doc.data().itemref[ '_key' ].path.segments[ 5 ]
-
+        const saleItemCategory = doc.data().itemref[ '_key' ].path.segments[ 5 ];
 
         var saleItemSnap = await getDoc( doc.data().itemref );
 
@@ -171,16 +193,16 @@ router.get( "/discounted-items", async function ( req, res ) {
             // calculating the total of no. of single ,queen ,king size bedsheets
             var totalSaleItemQuantity = parseInt( saleItemSnap.data().single[ 1 ] ) + parseInt( saleItemSnap.data().queen[ 1 ] ) + parseInt( saleItemSnap.data().king[ 1 ] )
 
-            return new saleItemData( saleItemSnap.id, saleItemSnap.data().name, imgURLSaleItem, saleItemSnap.data().baseprice, totalSaleItemQuantity, doc.data().discount, saleItemCategory )
+            return new saleItemData( doc.id, saleItemSnap.data().name, imgURLSaleItem, saleItemSnap.data().baseprice, totalSaleItemQuantity, doc.data().discount )
 
         } else
-            return new saleItemData( saleItemSnap.id, saleItemSnap.data().name, imgURLSaleItem, saleItemSnap.data().baseprice, saleItemSnap.data().quantity, doc.data().discount, saleItemCategory )
+            return new saleItemData( doc.id, saleItemSnap.data().name, imgURLSaleItem, saleItemSnap.data().baseprice, saleItemSnap.data().quantity, doc.data().discount )
 
     } ) );
 
     console.log( saleItemList );
 
-    res.render( "products", { list: saleItemList, product: 'Sale' } );
+    res.render( "products", { list: saleItemList, product: 'Discounted Items' } );
 
 } )
 
@@ -228,7 +250,7 @@ router.get( "/collections/:product", async function ( req, res ) {
 } )
 
 
-// specific product for bedsheet
+// specific non sale product for bedsheet
 router.get( "/collections/bedsheets/product/:item", async function ( req, res ) {
 
     const bedsheetID = req.params.item;
@@ -263,7 +285,45 @@ router.get( "/collections/bedsheets/product/:item", async function ( req, res ) 
 } );
 
 
-// specific product for category
+router.get( "/collections/sale/product/:item", async function ( req, res ) {
+
+    const saleItemID = req.params.item;
+
+
+    // reference and data of the sale item 
+    const saleItemDocRef = doc( imports.db, 'sale', saleItemID );
+    const saleItemDocSnap = await getDoc( saleItemDocRef );
+
+    // item category
+    const saleItemCategory = saleItemDocSnap.data().itemref[ '_key' ].path.segments[ 5 ];
+
+    // data of the item
+    var saleItemSnap = await getDoc( saleItemDocSnap.data().itemref );
+
+
+    // reference to a bucket in cloud storage
+    const saleImgRef = ref( imports.storage, saleItemCategory + "/" + saleItemSnap.id );
+    const saleImgURL = await getDownloadURL( saleImgRef );
+
+
+    if ( saleItemCategory == 'bedsheets' ) {
+
+        const salebedsheetData = new saleBedsheetData( saleItemSnap.data().name, saleImgURL, saleItemSnap.data().single, saleItemSnap.data().queen, saleItemSnap.data().king, saleItemDocSnap.data().discount )
+        console.log( salebedsheetData )
+        res.render( 'sale-bedsheet', { itemData: salebedsheetData } )
+    } else {
+
+        const saleData = new saleItemData( saleItemSnap.id, saleItemSnap.data().name, saleImgURL, saleItemSnap.data().baseprice, saleItemSnap.data().quantity, saleItemDocSnap.data().discount )
+        console.log( saleData )
+        res.render( 'sale-item', { itemData: saleData } )
+
+    }
+
+
+} )
+
+
+// specific none sale product for category { bedcover ,quilt ,dohar}
 router.get( "/collections/:category/product/:item", async function ( req, res ) {
 
     const itemID = req.params.item;
@@ -295,6 +355,8 @@ router.get( "/collections/:category/product/:item", async function ( req, res ) 
     res.render( 'item', { itemData: itemData } )
 
 } );
+
+
 
 
 // refunf policy page

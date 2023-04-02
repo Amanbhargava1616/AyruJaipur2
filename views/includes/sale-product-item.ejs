@@ -1,0 +1,28 @@
+<div class="js-col col-sm-6 col-12 col-lg-4">
+    <div class="product-card js-product-card product-card--style3" data-price="114900">
+        <div class="product-card__image-wr transition overflow-hidden">
+            <a class="product-card__image js" href="/collections/sale/product/<%= productData.itemId %>"
+                style="max-width: 480px;" data-image-id="37119165071581">
+                <img class="transition first-image lazyautosizes lazyloaded img-fluid"
+                    src="<%=productData.itemImgUrl %>" data-sizes="auto" alt="<%=productData.itemName %>" </a>
+        </div>
+        <div class="product-card__info">
+
+            <a href="/collections/sale/product/<%= productData.itemId %>" title="TYOHAAR COLLECTION"
+                class="product-card__name">
+                <%= productData.itemName %>
+            </a>
+            <div class="product-price-quantity">
+                <div class="product-card__price">
+                    <%=productData.discountPrice %>
+                        <del>
+                            <%= productData.itemPrice %>
+                        </del>
+                </div>
+                <div class="product-card__price">
+                    Quantity Available : <%= productData.itemAvaibility %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
