@@ -380,6 +380,20 @@ router.get( "/Shipping", async function ( req, res ) {
 } );
 
 
+// about us page
+router.get( "/about-Us", async function ( req, res ) {
+
+    res.render( 'aboutUs' );
+} );
+
+
+// contact us page
+router.get( "/contact-Us", async function ( req, res ) {
+
+    res.render( 'contactPage' );
+} );
+
+
 
 
 export { router };
