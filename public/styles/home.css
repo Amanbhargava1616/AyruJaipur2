@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 :root {
 	--mainColor: #ffcd54;
@@ -61,6 +62,18 @@
 	width: 130px;
 	height: 130px;
 	translate: 100px;
+}
+
+.description-text {
+	max-width: 1000px;
+	align-self: center;
+	text-align: center;
+	color: rgb(131, 131, 131);
+	line-height: 30px;
+	box-sizing: border-box;
+	font-family: "Poppins", sans-serif;
+	font-size: 1rem;
+	margin: 20px 0 70px;
 }
 
 .fa-heart {
