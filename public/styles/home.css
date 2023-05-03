@@ -2,7 +2,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 :root {
-	--mainColor: #ffcd54;
 	--mainHoverColor: #ffb60d;
 	--logoColor: #febd59;
 }
@@ -51,17 +50,14 @@
 }
 
 .description-Section-heart-logo {
-	display: flex !important;
-	align-items: center;
-	justify-content: center;
-	translate: -50px;
+	display: grid !important;
+	place-content: center;
 }
 
 .description-Section-heart-logo > img {
 	border-radius: 50%;
-	width: 130px;
-	height: 130px;
-	translate: 100px;
+	width: 300px;
+	height: 300px;
 }
 
 .description-text {
