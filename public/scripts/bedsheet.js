@@ -7,4 +7,8 @@ $( function () {
         $( "#itemPrice" ).html( $( this ).data( 'price' ) )
         $( "#itemquantity" ).html( $( this ).data( 'quantity' ) + ' available' )
     } )
+
+    $( ".subImageDiv" ).click( function () {
+        $( ".itemImage" ).attr( "src", $( this ).children( "img" ).attr( "src" ) )
+    } )
 } )

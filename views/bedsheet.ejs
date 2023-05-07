@@ -17,7 +17,18 @@
         <main class="container">
             <div class="row">
                 <div class="col-lg-6 p-lg-5">
-                    <img src="<%= itemData.url %>" alt="<%= itemData.name %>" class="itemImage">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <img src="<%= itemData.url %>" alt="<%= itemData.name %>" class="itemImage">
+                        </div>
+                        <div class="col-sm-2 subImagesDiv">
+                            <% for (let subImageURL of itemData.subImgsUrlList) { %>
+                                <div class="subImageDiv">
+                                    <img src="<%= subImageURL %>" alt="hello" class="subImage">
+                                </div>
+                                <% } %>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-6 p-lg-5">
                     <h1 class="row itemName">

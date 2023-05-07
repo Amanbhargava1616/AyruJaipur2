@@ -25,7 +25,7 @@ class nonSaleItemData {
 // class for Sale item for sale list
 // class for specific sale item 
 class saleItemData {
-    constructor( ID, name, imgUrl, baseprice, qunatity, discount ) {
+    constructor( ID, name, imgUrl, baseprice, qunatity, discount, subImgsUrlList ) {
         this.itemId = ID;
         this.itemName = name;
         this.itemImgUrl = imgUrl;
@@ -33,6 +33,7 @@ class saleItemData {
         this.itemAvaibility = parseInt( qunatity );
         this.discount = parseInt( discount );
         this.discountPrice = formateCurrency( ( 1 - this.discount * 0.01 ) * parseFloat( baseprice ) )
+        this.subImgsUrlList = subImgsUrlList
 
         return this;
     }
@@ -41,7 +42,7 @@ class saleItemData {
 // class for specific sale item bedsheet 
 
 class saleBedsheetData {
-    constructor( name, imgUrl, single, queen, king, discount ) {
+    constructor( name, imgUrl, single, queen, king, discount, subImgsUrlList ) {
 
         this.itemName = name;
         this.itemImgUrl = imgUrl;
@@ -56,7 +57,7 @@ class saleBedsheetData {
         queen[ 0 ] = formateCurrency( queen[ 0 ] );
         king[ 0 ] = formateCurrency( king[ 0 ] );
 
-        return { ...this, single, queen, king };
+        return { ...this, single, queen, king, subImgsUrlList };
     }
 }
 
@@ -263,7 +264,7 @@ router.get( "/collections/bedsheets/product/:item", async function ( req, res ) 
     const imgRef = ref( imports.storage, 'bedsheets' + "/" + bedsheetID );
     const imgURL = await getDownloadURL( imgRef )
         .then( ( url ) => {
-            // `url` is the download URL for 'images/stars.jpg'
+
 
             // console.log( url );
             return url;
@@ -272,7 +273,22 @@ router.get( "/collections/bedsheets/product/:item", async function ( req, res ) 
             console.error( er6 )
         } );
 
-    const bedsheetData = { ...bedsheetSnap.data(), url: imgURL };
+    const subImgsRef = ref( imports.storage, `bedsheets/${bedsheetID}` );
+
+    const subImgsUrlList = await listAll( subImgsRef )
+        .then( async res => {
+
+            return await Promise.all( res.items.map( async ( subImageRef ) => {
+
+                return await getDownloadURL( subImageRef );
+            } ) )
+
+        } ).catch( ( er8 ) => {
+            console.error( er8 )
+        } )
+    // console.log( subImgsUrlList )
+
+    const bedsheetData = { ...bedsheetSnap.data(), url: imgURL, subImgsUrlList: subImgsUrlList };
 
     bedsheetData.single[ 0 ] = formateCurrency( bedsheetData.single[ 0 ] )
     bedsheetData.queen[ 0 ] = formateCurrency( bedsheetData.queen[ 0 ] )
@@ -305,15 +321,31 @@ router.get( "/collections/sale/product/:item", async function ( req, res ) {
     const saleImgRef = ref( imports.storage, saleItemCategory + "/" + saleItemSnap.id );
     const saleImgURL = await getDownloadURL( saleImgRef );
 
+    // reference to bucket in for sub images
+    const subImgsRef = ref( imports.storage, `${saleItemCategory}/${saleItemSnap.id}` );
+
+    const subImgsUrlList = await listAll( subImgsRef )
+        .then( async res => {
+
+            return await Promise.all( res.items.map( async ( subImageRef ) => {
+
+                return await getDownloadURL( subImageRef );
+            } ) )
+
+        } ).catch( ( er9 ) => {
+            console.error( er9 )
+        } )
+    // console.log( subImgsUrlList )
+
 
     if ( saleItemCategory == 'bedsheets' ) {
 
-        const salebedsheetData = new saleBedsheetData( saleItemSnap.data().name, saleImgURL, saleItemSnap.data().single, saleItemSnap.data().queen, saleItemSnap.data().king, saleItemDocSnap.data().discount )
+        const salebedsheetData = new saleBedsheetData( saleItemSnap.data().name, saleImgURL, saleItemSnap.data().single, saleItemSnap.data().queen, saleItemSnap.data().king, saleItemDocSnap.data().discount, subImgsUrlList )
         console.log( salebedsheetData )
         res.render( 'sale-bedsheet', { itemData: salebedsheetData } )
     } else {
 
-        const saleData = new saleItemData( saleItemSnap.id, saleItemSnap.data().name, saleImgURL, saleItemSnap.data().baseprice, saleItemSnap.data().quantity, saleItemDocSnap.data().discount )
+        const saleData = new saleItemData( saleItemSnap.id, saleItemSnap.data().name, saleImgURL, saleItemSnap.data().baseprice, saleItemSnap.data().quantity, saleItemDocSnap.data().discount, subImgsUrlList )
         console.log( saleData )
         res.render( 'sale-item', { itemData: saleData } )
 
@@ -346,7 +378,22 @@ router.get( "/collections/:category/product/:item", async function ( req, res ) 
             console.error( er7 )
         } );
 
-    const itemData = { ...itemSnap.data(), url: imgURL };
+    const subImgsRef = ref( imports.storage, `${category}/${itemID}` );
+
+    const subImgsUrlList = await listAll( subImgsRef )
+        .then( async res => {
+
+            return await Promise.all( res.items.map( async ( subImageRef ) => {
+
+                return await getDownloadURL( subImageRef );
+            } ) )
+
+        } ).catch( ( er10 ) => {
+            console.error( er10 )
+        } )
+    // console.log( subImgsUrlList )
+
+    const itemData = { ...itemSnap.data(), url: imgURL, subImgsUrlList: subImgsUrlList };
 
     itemData.baseprice = formateCurrency( itemData.baseprice );
 

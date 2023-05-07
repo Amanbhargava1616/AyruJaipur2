@@ -8,4 +8,8 @@ $( function () {
         $( "#itemPrice" ).children( 'span' ).html( $( this ).data( 'discountprice' ) )
         $( "#itemquantity" ).html( $( this ).data( 'quantity' ) + ' available' )
     } )
+
+    $( ".subImageDiv" ).click( function () {
+        $( ".itemImage" ).attr( "src", $( this ).children( "img" ).attr( "src" ) )
+    } )
 } )

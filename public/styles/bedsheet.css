@@ -10,3 +10,19 @@
 .active {
 	border: black 1px solid;
 }
+
+.subImage {
+	max-width: 100px;
+	margin-bottom: 15px;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 576px) {
+	.subImagesDiv {
+		margin-top: 10px;
+		display: flex;
+		gap: 15px;
+		flex-wrap: wrap;
+		justify-content: space-evenly;
+	}
+}
