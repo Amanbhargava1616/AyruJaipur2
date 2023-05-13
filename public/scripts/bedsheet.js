@@ -1,4 +1,11 @@
 $( function () {
+    const textToBeSent = `Hi, I would like to know more about the product ${$( ".waLink" ).data( "itemname" )}
+    ${$( location ).attr( 'href' )}`
+    const waLink = `https://api.whatsapp.com/send?phone=919785852222&text=${textToBeSent}`
+
+    $( ".waLink" ).attr( "href", waLink )
+
+
     $( ".priceBtn" ).click( function () {
         const style = $( this ).data( 'style' );
         console.log( style )

@@ -154,14 +154,6 @@ router.get( "/clientLove", function ( req, res ) {
 
 
 
-
-
-// rendering collections page
-router.get( "/collections", function ( req, res ) {
-    res.render( "collections" );
-} )
-
-
 // rendering page for sale items
 router.get( "/discounted-items", async function ( req, res ) {
 
@@ -439,8 +431,6 @@ router.get( "/contact-Us", async function ( req, res ) {
 
     res.render( 'contactPage' );
 } );
-
-
 
 
 export { router };
