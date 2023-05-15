@@ -62,9 +62,42 @@
                     <div class="row waRedirectDiv">
                         <a href="" target="_blank" rel="noopener noreferrer" class="waLink"
                             data-itemname="<%= itemData.itemName %>">
-                            Click To know about this product on
-                            What's App
+                            Order on What's App
                         </a>
+                    </div>
+                    <div class="row">
+                        <div class="row productDescription">
+                            <div class="descriptionHeading">Product Descriptions :</div>
+                            <p>
+                                <%= itemData.description %>
+                            </p>
+                        </div>
+                        <div class="row productDescription">
+                            <div class="descriptionHeading">Product Specification :</div>
+                            <% for(specs of itemData.specification){ %>
+
+                                <div class="descriptionListItem">
+                                    <%= specs %>
+                                </div>
+
+                                <% } %>
+                        </div>
+                        <div class="row productDescription">
+                            <div class="descriptionHeading">Care instructions :</div>
+                            <% for(instruction of itemData.instructions){ %>
+
+                                <div class="descriptionListItem">
+                                    <%= instruction %>
+                                </div>
+
+                                <% } %>
+                        </div>
+                        <div class="row productDescription">
+                            <div class="descriptionHeading">Disclaimer :</div>
+                            <p>
+                                <%= itemData.disclaimer %>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

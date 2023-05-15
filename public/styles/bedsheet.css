@@ -1,20 +1,78 @@
+body {
+	background-color: #ffead5;
+}
+
 .itemImage {
 	width: 100%;
-}
-
-.priceBtn {
-	background: yellow;
-	border: none;
-}
-
-.active {
-	border: black 1px solid;
 }
 
 .subImage {
 	max-width: 100px;
 	margin-bottom: 15px;
 	cursor: pointer;
+}
+
+.itemPriceQuantity {
+	display: flex;
+	align-items: flex-end;
+}
+
+#itemPrice {
+	color: #febd59;
+	font-size: 1.5rem;
+}
+
+#itemquantity {
+	color: rgb(104, 104, 104);
+	font-weight: 600;
+}
+
+.priceBtn {
+	background: #febd59;
+	border: none;
+	border-radius: 5px;
+}
+
+.active {
+	border: black 1px solid;
+}
+
+.waRedirectDiv {
+	background: linear-gradient(
+		90deg,
+		rgb(18, 198, 101) 0.85%,
+		rgb(0, 148, 70) 100%
+	);
+	font-size: 1.5rem;
+	font-weight: 600;
+	padding: 10px 5px;
+	text-align: center;
+	border-radius: 35px;
+	margin-bottom: 10px;
+}
+
+.waRedirectDiv > a {
+	text-decoration: none;
+	color: #fff;
+}
+
+.descriptionHeading {
+	color: rgb(70, 70, 70);
+	font-weight: 600;
+	font-size: 1.15rem;
+}
+
+.productDescription {
+	line-height: 2;
+}
+
+.descriptionListItem {
+	line-height: 2.5;
+}
+
+.descriptionListItem::before {
+	content: "*";
+	color: rgb(70, 70, 70);
 }
 
 @media screen and (max-width: 576px) {

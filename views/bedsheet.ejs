@@ -44,7 +44,7 @@
                     </p>
 
                     <p class="row itemStyle">
-                    <div class="row">
+                    <div class="row" style="font-size: 1.15rem; font-weight:500;">
                         STYLE
                     </div>
                     <div class="row">
@@ -65,11 +65,45 @@
 
                     </p>
                     <div class="row waRedirectDiv">
-                        <a href=""
-                            target="_blank" rel="noopener noreferrer" class="waLink" data-itemname="<%= itemData.name %>">
-                            Click To know about this product on
-                            What's App
+                        <a href="" target="_blank" rel="noopener noreferrer" class="waLink"
+                            data-itemname="<%= itemData.name %>">
+                            Order on What's App
                         </a>
+                    </div>
+
+                    <div class="row">
+                        <div class="row productDescription">
+                            <div class="descriptionHeading">Product Descriptions :</div>
+                            <p>
+                                <%= itemData.description %>
+                            </p>
+                        </div>
+                        <div class="row productDescription">
+                            <div class="descriptionHeading">Product Specification :</div>
+                            <% for(specs of itemData.specification){ %>
+
+                                <div class="descriptionListItem">
+                                    <%= specs %>
+                                </div>
+
+                                <% } %>
+                        </div>
+                        <div class="row productDescription">
+                            <div class="descriptionHeading">Care instructions :</div>
+                            <% for(instruction of itemData.instructions){ %>
+
+                                <div class="descriptionListItem">
+                                    <%= instruction %>
+                                </div>
+
+                                <% } %>
+                        </div>
+                        <div class="row productDescription">
+                            <div class="descriptionHeading">Disclaimer :</div>
+                            <p>
+                                <%= itemData.disclaimer %>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

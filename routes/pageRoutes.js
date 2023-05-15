@@ -25,7 +25,7 @@ class nonSaleItemData {
 // class for Sale item for sale list
 // class for specific sale item 
 class saleItemData {
-    constructor( ID, name, imgUrl, baseprice, qunatity, discount, subImgsUrlList ) {
+    constructor( ID, name, imgUrl, baseprice, qunatity, discount, subImgsUrlList, description, specification, instructions, disclaimer ) {
         this.itemId = ID;
         this.itemName = name;
         this.itemImgUrl = imgUrl;
@@ -34,6 +34,10 @@ class saleItemData {
         this.discount = parseInt( discount );
         this.discountPrice = formateCurrency( ( 1 - this.discount * 0.01 ) * parseFloat( baseprice ) )
         this.subImgsUrlList = subImgsUrlList
+        this.description = description
+        this.instructions = instructions
+        this.specification = specification
+        this.disclaimer = disclaimer
 
         return this;
     }
@@ -42,7 +46,7 @@ class saleItemData {
 // class for specific sale item bedsheet 
 
 class saleBedsheetData {
-    constructor( name, imgUrl, single, queen, king, discount, subImgsUrlList ) {
+    constructor( name, imgUrl, single, queen, king, discount, subImgsUrlList, description, specification, instructions, disclaimer ) {
 
         this.itemName = name;
         this.itemImgUrl = imgUrl;
@@ -57,7 +61,7 @@ class saleBedsheetData {
         queen[ 0 ] = formateCurrency( queen[ 0 ] );
         king[ 0 ] = formateCurrency( king[ 0 ] );
 
-        return { ...this, single, queen, king, subImgsUrlList };
+        return { ...this, single, queen, king, subImgsUrlList, description, specification, instructions, disclaimer };
     }
 }
 
@@ -332,12 +336,12 @@ router.get( "/collections/sale/product/:item", async function ( req, res ) {
 
     if ( saleItemCategory == 'bedsheets' ) {
 
-        const salebedsheetData = new saleBedsheetData( saleItemSnap.data().name, saleImgURL, saleItemSnap.data().single, saleItemSnap.data().queen, saleItemSnap.data().king, saleItemDocSnap.data().discount, subImgsUrlList )
+        const salebedsheetData = new saleBedsheetData( saleItemSnap.data().name, saleImgURL, saleItemSnap.data().single, saleItemSnap.data().queen, saleItemSnap.data().king, saleItemDocSnap.data().discount, subImgsUrlList, saleItemSnap.data().description, saleItemSnap.data().specification, saleItemSnap.data().instructions, saleItemSnap.data().disclaimer )
         console.log( salebedsheetData )
         res.render( 'sale-bedsheet', { itemData: salebedsheetData } )
     } else {
 
-        const saleData = new saleItemData( saleItemSnap.id, saleItemSnap.data().name, saleImgURL, saleItemSnap.data().baseprice, saleItemSnap.data().quantity, saleItemDocSnap.data().discount, subImgsUrlList )
+        const saleData = new saleItemData( saleItemSnap.id, saleItemSnap.data().name, saleImgURL, saleItemSnap.data().baseprice, saleItemSnap.data().quantity, saleItemDocSnap.data().discount, subImgsUrlList, saleItemSnap.data().description, saleItemSnap.data().specification, saleItemSnap.data().instructions, saleItemSnap.data().disclaimer )
         console.log( saleData )
         res.render( 'sale-item', { itemData: saleData } )
 
