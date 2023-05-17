@@ -38,7 +38,8 @@ body {
 		90deg,
 		rgb(18, 198, 101) 0.85%,
 		rgb(0, 148, 70) 100%
-	);	font-size: 1.5rem;
+	);
+	font-size: 1.5rem;
 	font-weight: 600;
 	padding: 10px 5px;
 	text-align: center;
@@ -68,6 +69,10 @@ body {
 .descriptionListItem::before {
 	content: "*";
 	color: rgb(70, 70, 70);
+}
+
+.productMetaData{
+	margin-left:5px;
 }
 
 @media screen and (max-width: 576px) {

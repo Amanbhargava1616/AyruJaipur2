@@ -199,7 +199,7 @@ router.get( "/discounted-items", async function ( req, res ) {
 
     console.log( saleItemList );
 
-    res.render( "products", { list: saleItemList, product: 'Discounted Items' } );
+    res.render( "products", { list: saleItemList, product: 'Sale' } );
 
 } )
 

@@ -147,7 +147,6 @@ button.slick-arrow::before {
 	background-color: #febc5930 !important;
 	margin: 10px;
 	padding: 40px 20px;
-
 }
 
 .customer_review {
@@ -168,5 +167,11 @@ button.slick-arrow::before {
 @media screen and (min-width: 768px) {
 	.registerSection {
 		padding-right: 100px !important;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	button.slick-arrow::before {
+		display: none;
 	}
 }
