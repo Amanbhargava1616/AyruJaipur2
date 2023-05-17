@@ -47,7 +47,7 @@
                 <% for (const key in list) { %>
                     <% if (list.hasOwnProperty.call(list, key)) { %>
                         <% const productItem=list[key]; %>
-                            <% if(product=='Discounted Items' ){ %>
+                            <% if(product=='Sale' ){ %>
                                 <%- include('includes/sale-product-item.ejs', {productData:productItem,product:product}) %>
                                     <% } else{ %>
                                         <%-include('includes/product-item.ejs',{productData:productItem,product:product})%>
