@@ -436,5 +436,17 @@ router.get( "/contact-Us", async function ( req, res ) {
     res.render( 'contactPage' );
 } );
 
+// terms of service
+router.get( "/terms-of-service", async function ( req, res ) {
+
+    res.render( 'termsOfService' );
+} );
+
+// privacy policy
+router.get( "/privacy-policy", async function ( req, res ) {
+
+    res.render( 'privacyPolicy' );
+} );
+
 
 export { router };
