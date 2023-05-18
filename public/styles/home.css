@@ -175,3 +175,9 @@ button.slick-arrow::before {
 		display: none;
 	}
 }
+
+@media screen and (max-width: 992px) {
+	.clientLoveTohide {
+		display: none;
+	}
+}
