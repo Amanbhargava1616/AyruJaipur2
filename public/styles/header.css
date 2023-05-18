@@ -183,7 +183,7 @@ header {
 	width: 70px;
 	height: 70px;
 	bottom: 40px;
-	left: 40px;
+	right: 40px;
 	background: linear-gradient(
 		90deg,
 		rgb(18, 198, 101) 0.85%,
