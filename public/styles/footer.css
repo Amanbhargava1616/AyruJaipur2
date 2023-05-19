@@ -57,3 +57,8 @@ footer ul li > a {
 	color: black !important;
 }
 
+@media screen and (max-width: 768px) {
+	footer {
+		background-color: #fdcd85;
+	}
+}
