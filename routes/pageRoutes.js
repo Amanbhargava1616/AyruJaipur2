@@ -208,13 +208,19 @@ router.get( "/discounted-items", async function ( req, res ) {
 // rendering a product page
 router.get( "/collections/:product", async function ( req, res ) {
 
-    const product = req.params.product;
+    var product = req.params.product;
 
 
     // reading all the data of products in db
     const querySnapshot = await getDocs( collection( imports.db, product ) );
 
     const ProductDataList = await Promise.all( querySnapshot.docs.map( async ( doc ) => {
+
+        if ( product === "newArrivals" || product === "bestSellers" ) {
+            product = doc.data().itemref[ '_key' ].path.segments[ 5 ];
+
+            doc = await getDoc( doc.data().itemref );
+        }
 
         const imgRefProduct = ref( imports.storage, product + "/" + doc.id );
         const imgURLProduct = await getDownloadURL( imgRefProduct )

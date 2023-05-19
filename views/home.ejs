@@ -26,12 +26,11 @@
 
             <!-- Slider { Slick } -->
             <div class="your-class section">
-                <div>
-                    <img src="<%= homepageList.carousel[0] %>" alt="HandPrint" class="slider-images img-fluid">
-                </div>
-                <div>
-                    <img src="<%= homepageList.carousel[1] %>" alt="HandPrintLogo" class="slider-images img-fluid">
-                </div>
+                <% for(let carouselImage of homepageList.carousel) {%>
+                    <div>
+                        <img src="<%= carouselImage %>" alt="HandPrintLogo" class="slider-images img-fluid">
+                    </div>
+                    <% } %>
             </div>
 
 
@@ -60,7 +59,7 @@
                     <div class="best_products products-sub-div col-md-5"
                         style="background-image: url('<%=homepageList.bestseller %>');">
                         <img src="<%=homepageList.bestseller %>" style="visibility: hidden;" class="img-fluid" />
-                        <a href="/collections/best sellers" target="_self" rel="noopener noreferrer">
+                        <a href="/collections/bestSellers" target="_self" rel="noopener noreferrer">
                             <div>
                                 <button>
                                     Best Sellers
@@ -71,7 +70,7 @@
                     <div class="new_products products-sub-div col-md-5"
                         style="background-image: url('<%=homepageList.justlaunched %>');">
                         <img src="<%=homepageList.justlaunched %>" style="visibility: hidden;" class="img-fluid" />
-                        <a href="/collections/new arrivals" target="_self" rel="noopener noreferrer">
+                        <a href="/collections/newArrivals" target="_self" rel="noopener noreferrer">
                             <div>
                                 <button>
                                     New Arrivals
@@ -137,7 +136,7 @@
             </div>
 
 
-
+            <!-- client love -->
             <div class="section" id="clientLove">
 
                 <div class="row text-center">
@@ -147,16 +146,13 @@
                 </div>
                 <div class="row">
                     <a href="/clientLove" target="_self" rel="noopener noreferrer" class="col-lg-4 col-md-6 col-12">
-                        <img src="<%= homepageList.clientLoveImg1[0] %>" alt="" srcset=""
-                            class="clientLove_img img-fluid">
+                        <img src="<%= homepageList.clientlove[0] %>" alt="" srcset="" class="clientLove_img img-fluid">
                     </a>
                     <a href="/clientLove" target="_self" rel="noopener noreferrer" class="col-lg-4 col-md-6 col-12">
-                        <img src="<%= homepageList.clientLoveImg1[1] %>" alt="" srcset=""
-                            class="clientLove_img img-fluid">
+                        <img src="<%= homepageList.clientlove[1] %>" alt="" srcset="" class="clientLove_img img-fluid">
                     </a>
                     <a href="/clientLove" target="_self" rel="noopener noreferrer" class="col-lg-4 clientLoveTohide">
-                        <img src="<%= homepageList.clientLoveImg1[2] %>" alt="" srcset=""
-                            class="clientLove_img img-fluid">
+                        <img src="<%= homepageList.clientlove[2] %>" alt="" srcset="" class="clientLove_img img-fluid">
                     </a>
                 </div>
                 <div class="row">
