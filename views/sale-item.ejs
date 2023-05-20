@@ -16,10 +16,13 @@
 
         <main class="container">
             <div class="row">
-                <div class="col-lg-6 p-lg-5">
+                <div class="col-lg-6 p-lg-5 ">
                     <div class="row">
-                        <div class="col-sm-10">
+                        <div class="col-sm-10 saleItemImagediscountdiv">
                             <img src="<%= itemData.itemImgUrl %>" alt="<%= itemData.itemName %>" class="itemImage">
+                            <div class="product-card__discount">
+                                <%=itemData.discount %> %
+                            </div>
                         </div>
                         <div class="col-sm-2 subImagesDiv">
                             <% for (let subImageURL of itemData.subImgsUrlList) { %>
@@ -29,6 +32,7 @@
                                 <% } %>
                         </div>
                     </div>
+
                 </div>
                 <div class="col-lg-6 p-lg-5">
                     <h1 class="row itemName productMetaData">
@@ -36,9 +40,10 @@
                     </h1>
                     <p class="row itemPriceQuantity productMetaData">
                         <span class="col-6" id="itemPrice">
-                            <%= itemData.discountPrice %>
+                            &#x20b9; <%= itemData.discountPrice %>
+                                &emsp;
                                 <del>
-                                    <%= itemData.itemPrice %>
+                                    &#x20b9; <%= itemData.itemPrice %>
                                 </del>
                         </span>
                     </p>

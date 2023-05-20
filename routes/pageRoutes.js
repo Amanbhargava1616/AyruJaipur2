@@ -85,12 +85,21 @@ router.get( "/home", async function ( req, res ) {                              
 
 
     const docRefHome = doc( imports.db, "ayruJaipur", "homepage" );
+    const clientReviewRef = await getDocs( collection( imports.db, "clientlove" ) );
     const docSnapHome = await getDoc( docRefHome );
+
+
 
     if ( docSnapHome.exists() ) {
 
+        const clientReview = await Promise.all( clientReviewRef.docs.map( async ( doc ) => {
+
+            return { ...doc.data(), clientName: doc.id }
+        } ) );
+        console.log( clientReview )
+
         console.log( "Document data:", docSnapHome.data() );
-        res.render( 'home', { homepageList: docSnapHome.data() } )
+        res.render( 'home', { homepageList: docSnapHome.data(), clientreviewList: clientReview } )
 
     } else {
         // doc.data() will be undefined in this case

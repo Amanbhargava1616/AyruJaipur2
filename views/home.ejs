@@ -157,91 +157,26 @@
                 </div>
                 <div class="row">
                     <div class="autoplayClientLoveSlick">
-                        <div class="clientLoveReviewBox">
-                            <!-- <h2>Client Review</h2> -->
-                            <p class="customer_review">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate dolores repellat
-                                assumenda laboriosam recusandae sed ipsam qui pariatur nam
-                                nemo est rerum molestiae, magni a aliquid, excepturi perspiciatis modi eaque earum
-                                exercitationem quibusdam quis illo?
-                            </p>
-                            <div class="ratingDiv">
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li></li>
+                        <% for(let clientreview of clientreviewList) {%>
+                            <div class="clientLoveReviewBox">
+                                <!-- <h2>Client Review</h2> -->
+                                <p class="customer_review">
+                                    <%= clientreview.review %>
+                                </p>
+                                <div class="ratingDiv">
+
+                                    <% for(var i=0;i<parseInt(clientreview.rating);i++){ %>
+                                        <li class="rated"></li>
+                                        <% } %>
+                                            <% for( i;i<parseInt('5');i++){ %>
+                                                <li></li>
+                                                <% } %>
+                                </div>
+                                <h4>
+                                    <%= clientreview.clientName %>
+                                </h4>
                             </div>
-                            <h4>Aman Bhargava</h4>
-                        </div>
-                        <div class="clientLoveReviewBox">
-                            <!-- <h2>Client Review</h2> -->
-                            <p class="customer_review">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate dolores repellat
-                                assumenda laboriosam recusandae sed ipsam qui pariatur nam
-                                nemo est rerum molestiae, magni a aliquid, excepturi perspiciatis modi eaque earum
-                                exercitationem quibusdam quis illo?
-                            </p>
-                            <div class="ratingDiv">
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li></li>
-                            </div>
-                            <h4>Aman Bhargava</h4>
-                        </div>
-                        <div class="clientLoveReviewBox">
-                            <!-- <h2>Client Review</h2> -->
-                            <p class="customer_review">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate dolores repellat
-                                assumenda laboriosam recusandae sed ipsam qui pariatur nam
-                                nemo est rerum molestiae, magni a aliquid, excepturi perspiciatis modi eaque earum
-                                exercitationem quibusdam quis illo?
-                            </p>
-                            <div class="ratingDiv">
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li></li>
-                            </div>
-                            <h4>Aman Bhargava</h4>
-                        </div>
-                        <div class="clientLoveReviewBox">
-                            <!-- <h2>Client Review</h2> -->
-                            <p class="customer_review">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate dolores repellat
-                                assumenda laboriosam recusandae sed ipsam qui pariatur nam
-                                nemo est rerum molestiae, magni a aliquid, excepturi perspiciatis modi eaque earum
-                                exercitationem quibusdam quis illo?
-                            </p>
-                            <div class="ratingDiv">
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li></li>
-                            </div>
-                            <h4>Aman Bhargava</h4>
-                        </div>
-                        <div class="clientLoveReviewBox">
-                            <!-- <h2>Client Review</h2> -->
-                            <p class="customer_review">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate dolores repellat
-                                assumenda laboriosam recusandae sed ipsam qui pariatur nam
-                                nemo est rerum molestiae, magni a aliquid, excepturi perspiciatis modi eaque earum
-                                exercitationem quibusdam quis illo?
-                            </p>
-                            <div class="ratingDiv">
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li class="rated"></li>
-                                <li></li>
-                            </div>
-                            <h4>Aman Bhargava</h4>
-                        </div>
+                            <% } %>
 
                     </div>
                 </div>

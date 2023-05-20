@@ -57,6 +57,7 @@
 	transition: all ease 0.45s !important;
 	margin-top: 50px;
 	border-radius: 10px;
+	padding-bottom: 10px !important;
 }
 
 .product-card:hover {
@@ -78,6 +79,7 @@
 	font-size: 1.25rem;
 	color: black !important;
 	text-decoration: none;
+	text-align: center;
 }
 
 .product-price-quantity {
@@ -87,7 +89,21 @@
 	justify-content: space-evenly;
 }
 
-
+.product-card {
+	position: relative;
+}
+.product-card__discount {
+	background-color: rgba(255, 255, 255, 0.5);
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	padding: 1px 3px;
+	border-radius: 5px;
+	border: solid 3px rgb(186, 0, 0);
+	color: rgb(186, 0, 0);
+	font-weight: 500;
+	width: fit-content !important;
+}
 
 @media screen and (max-width: 991px) {
 	.view_case_section {
