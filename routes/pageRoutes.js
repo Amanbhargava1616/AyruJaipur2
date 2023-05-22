@@ -62,7 +62,7 @@ class saleBedsheetData {
         queen[ 0 ] = formateCurrency( queen[ 0 ] );
         king[ 0 ] = formateCurrency( king[ 0 ] );
 
-        return { ...this, single, queen, king, subImgsUrlList, description, specification, instructions, disclaimer, endingline };
+        return { ...this, single, queen, king, subImgsUrlList, description, specification, instructions, disclaimer, endingline, discount };
     }
 }
 
