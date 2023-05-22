@@ -42,14 +42,14 @@
                             <span>
                                 Rs.
                                 <span>
-                                    <%= itemData.single[2] %>
+                                    <%= itemData.queen[2] %>
                                 </span>
                             </span>
                             &emsp;
                             <del>
                                 Rs.
                                 <span>
-                                    <%= itemData.single[0] %>
+                                    <%= itemData.queen[0] %>
                                 </span>
                             </del>
                         </span>
@@ -60,12 +60,12 @@
                         STYLE
                     </div>
                     <div class="row productMetaData">
-                        <button class="col-3 me-2 active priceBtn" data-style="single"
+                        <button class="col-3 me-2 priceBtn" data-style="single"
                             data-originalprice="<%=itemData.single[0]%>" data-quantity="<%=itemData.single[1]%>"
                             data-discountprice="<%=itemData.single[2]%>">
                             Single <br>(60*90 inch)
                         </button>
-                        <button class="col-3 me-2 priceBtn" data-style="queen"
+                        <button class="col-3 me-2 active priceBtn" data-style="queen"
                             data-originalprice="<%=itemData.queen[0]%>" data-quantity="<%=itemData.queen[1]%>"
                             data-discountprice="<%=itemData.queen[2]%>">
                             Queen <br> (90*108 inch)
