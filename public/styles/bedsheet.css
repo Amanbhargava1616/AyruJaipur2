@@ -18,7 +18,7 @@ body {
 }
 
 #itemPrice {
-	color: #febd59;
+	color: #ff3522;
 	font-size: 1.5rem;
 }
 
@@ -100,7 +100,10 @@ body {
 		margin-top: 10px;
 		display: flex;
 		gap: 15px;
-		flex-wrap: wrap;
 		justify-content: space-evenly;
+	}
+
+	.subImage {
+		width: 20vw;
 	}
 }

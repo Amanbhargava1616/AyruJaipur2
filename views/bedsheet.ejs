@@ -36,7 +36,11 @@
                     </h1>
                     <p class="row itemPriceQuantity productMetaData">
                         <span class="col-12" id="itemPrice">
-                            &#x20b9; <%= itemData.single[0] %>
+                            Rs.
+                            <span>
+                                <%= itemData.single[0] %>
+                            </span>
+
                         </span>
                     </p>
 
@@ -99,6 +103,11 @@
                             <div class="descriptionHeading">Disclaimer :</div>
                             <p>
                                 <%= itemData.disclaimer %>
+                            </p>
+                        </div>
+                        <div class="row productDescription">
+                            <p>
+                                <%= itemData.endingline %>
                             </p>
                         </div>
                     </div>

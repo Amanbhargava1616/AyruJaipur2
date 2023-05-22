@@ -11,8 +11,8 @@ $( function () {
         console.log( 'sale' + style )
         $( ".active" ).removeClass( "active" );
         $( this ).addClass( "active" );
-        $( "#itemPrice" ).children( 'del' ).html( $( this ).data( 'originalprice' ) )
-        $( "#itemPrice" ).children( 'span' ).html( $( this ).data( 'discountprice' ) )
+        $( "#itemPrice" ).children( 'del' ).children('span').html( $( this ).data( 'originalprice' ) )
+        $( "#itemPrice" ).children( 'span' ).children( 'span' ).html( $( this ).data( 'discountprice' ) )
         $( "#itemquantity" ).html( $( this ).data( 'quantity' ) + ' available' )
     } )
 

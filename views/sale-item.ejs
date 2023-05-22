@@ -40,10 +40,10 @@
                     </h1>
                     <p class="row itemPriceQuantity productMetaData">
                         <span class="col-12" id="itemPrice">
-                            &#x20b9; <%= itemData.discountPrice %>
+                            Rs. <%= itemData.discountPrice %>
                                 &emsp;
                                 <del>
-                                    &#x20b9; <%= itemData.itemPrice %>
+                                    Rs. <%= itemData.itemPrice %>
                                 </del>
                         </span>
                     </p>
@@ -98,6 +98,11 @@
                             <div class="descriptionHeading">Disclaimer :</div>
                             <p>
                                 <%= itemData.disclaimer %>
+                            </p>
+                        </div>
+                        <div class="row productDescription">
+                            <p>
+                                <%= itemData.endingline %>
                             </p>
                         </div>
                     </div>
