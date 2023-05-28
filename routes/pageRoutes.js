@@ -9,13 +9,14 @@ import { formateCurrency } from "../public/scripts/currencyFormatter.js"
 import { calculateDiscount } from "../public/scripts/calculateDiscount.js"
 
 // class for Non-Sale item for non sale list
-class nonSaleItemData {
-    constructor( ID, name, imgUrl, baseprice, qunatity ) {
+class productData {
+    constructor( ID, name, imgUrl, baseprice, productType, qunatity ) {
         this.itemId = ID;
         this.itemName = name;
         this.itemImgUrl = imgUrl;
         this.itemPrice = formateCurrency( baseprice );
         this.itemAvaibility = parseInt( qunatity );
+        this.productType = productType;
 
         return this;
     }
@@ -218,7 +219,7 @@ router.get( "/discounted-items", async function ( req, res ) {
 // rendering a product page
 router.get( "/collections/:product", async function ( req, res ) {
 
-    var product = req.params.product;
+    const product = req.params.product;
 
 
     // reading all the data of products in db
@@ -226,13 +227,13 @@ router.get( "/collections/:product", async function ( req, res ) {
 
     const ProductDataList = await Promise.all( querySnapshot.docs.map( async ( doc ) => {
 
-        if ( product === "newArrivals" || product === "bestSellers" ) {
-            product = doc.data().itemref[ '_key' ].path.segments[ 5 ];
+        const productType = ( product == "newArrivals" || product == "bestSellers" ? doc.data().itemref[ '_key' ].path.segments[ 5 ] : product )
 
+        if ( product == "newArrivals" || product == "bestSellers" ) {
             doc = await getDoc( doc.data().itemref );
         }
 
-        const imgRefProduct = ref( imports.storage, product + "/" + doc.id );
+        const imgRefProduct = ref( imports.storage, productType + "/" + doc.id );
         const imgURLProduct = await getDownloadURL( imgRefProduct )
             .then( ( url ) => {
                 // `url` is the download URL for 'images/stars.jpg'
@@ -248,11 +249,11 @@ router.get( "/collections/:product", async function ( req, res ) {
             // calculating the total of no. of single ,queen ,king size bedsheets
             var totalQuantityAvailable = parseInt( doc.data().king[ 1 ] ) + parseInt( doc.data().queen[ 1 ] ) + parseInt( doc.data().single[ 1 ] )
 
-            return new nonSaleItemData( doc.id, doc.data().name, imgURLProduct, doc.data().baseprice, totalQuantityAvailable )
+            return new productData( doc.id, doc.data().name, imgURLProduct, doc.data().baseprice, productType, totalQuantityAvailable )
 
         }
         else
-            return new nonSaleItemData( doc.id, doc.data().name, imgURLProduct, doc.data().baseprice, doc.data().quantity )
+            return new productData( doc.id, doc.data().name, imgURLProduct, doc.data().baseprice, productType, doc.data().quantity )
 
     } ) );
 
