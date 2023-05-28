@@ -9,4 +9,10 @@ $( function () {
     $( ".subImageDiv" ).click( function () {
         $( ".itemImage" ).attr( "src", $( this ).children( "img" ).attr( "src" ) )
     } )
+
+    $( ".loungeWearSizeChartDiv" ).hide()
+
+    $( "#loungeWearSizeChartBtn" ).click( function () {
+        $( ".loungeWearSizeChartDiv" ).toggle()
+    } )
 } )

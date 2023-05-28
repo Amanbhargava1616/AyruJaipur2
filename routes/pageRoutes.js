@@ -26,7 +26,7 @@ class productData {
 // class for Sale item for sale list
 // class for specific sale item 
 class saleItemData {
-    constructor( ID, name, imgUrl, baseprice, qunatity, discount, subImgsUrlList, description, specification, instructions, disclaimer, endingline ) {
+    constructor( ID, name, imgUrl, baseprice, qunatity, discount, subImgsUrlList, description, specification, instructions, disclaimer, endingline, category ) {
         this.itemId = ID;
         this.itemName = name;
         this.itemImgUrl = imgUrl;
@@ -40,6 +40,7 @@ class saleItemData {
         this.specification = specification
         this.disclaimer = disclaimer
         this.endingline = endingline
+        this.category = category
 
         return this;
     }
@@ -358,7 +359,7 @@ router.get( "/collections/sale/product/:item", async function ( req, res ) {
         res.render( 'sale-bedsheet', { itemData: salebedsheetData } )
     } else {
 
-        const saleData = new saleItemData( saleItemSnap.id, saleItemSnap.data().name, saleImgURL, saleItemSnap.data().baseprice, saleItemSnap.data().quantity, saleItemDocSnap.data().discount, subImgsUrlList, saleItemSnap.data().description, saleItemSnap.data().specification, saleItemSnap.data().instructions, saleItemSnap.data().disclaimer, saleItemSnap.data().endingline )
+        const saleData = new saleItemData( saleItemSnap.id, saleItemSnap.data().name, saleImgURL, saleItemSnap.data().baseprice, saleItemSnap.data().quantity, saleItemDocSnap.data().discount, subImgsUrlList, saleItemSnap.data().description, saleItemSnap.data().specification, saleItemSnap.data().instructions, saleItemSnap.data().disclaimer, saleItemSnap.data().endingline, saleItemCategory )
         console.log( saleData )
         res.render( 'sale-item', { itemData: saleData } )
 
@@ -406,7 +407,7 @@ router.get( "/collections/:category/product/:item", async function ( req, res ) 
         } )
     // console.log( subImgsUrlList )
 
-    const itemData = { ...itemSnap.data(), url: imgURL, subImgsUrlList: subImgsUrlList };
+    const itemData = { ...itemSnap.data(), url: imgURL, subImgsUrlList: subImgsUrlList, category: category };
 
     itemData.baseprice = formateCurrency( itemData.baseprice );
 

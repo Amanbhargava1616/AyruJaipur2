@@ -7,6 +7,8 @@
         <!-- item CSS -->
         <link rel="stylesheet" href="/styles/item.css">
 
+        <!-- bootstrap bundle js -->
+        <script src="/scripts/bootstrap.bundle.min.js"></script>
 
 </head>
 
@@ -40,64 +42,75 @@
                         </span>
                     </p>
 
-                    <p class="row itemStyle productMetaData">
-                    <div class="row productMetaData" style="font-size: 1.15rem; font-weight:500;">
-                        STYLE
-                    </div>
-                    <div class=" row productMetaData">
-
-                        <div class="col-3 size">
-                            Size <br>(90*108 inch)
+                    <% if( itemData.category=='bedcovers' || itemData.category=='quilts' ) { %>
+                        <p class="row itemStyle productMetaData">
+                        <div class="row productMetaData" style="font-size: 1.15rem; font-weight:500;">
+                            STYLE
                         </div>
-
-                    </div>
-
-                    </p>
-                    <div class="row waRedirectDiv">
-                        <a href="" target="_blank" rel="noopener noreferrer" class="waLink"
-                            data-itemname="<%= itemData.name %>">
-                            Order on WhatsApp
-                        </a>
-                    </div>
-                    <div class="row">
-                        <div class="row productDescription">
-                            <div class="descriptionHeading">Product Descriptions :</div>
-                            <p>
-                                <%= itemData.description %>
-                            </p>
+                        <div class=" row productMetaData">
+                            <div class="col-3 size">
+                                Size <br>(90*108 inch)
+                            </div>
                         </div>
-                        <div class="row productDescription">
-                            <div class="descriptionHeading">Product Specification :</div>
-                            <% for(specs of itemData.specification){ %>
-
-                                <div class="descriptionListItem">
-                                    <%= specs %>
+                        </p>
+                        <% } else if(itemData.category=='loungewear' ) { %>
+                            <div class="SizeChartSection">
+                                <button type="button" id="loungeWearSizeChartBtn">
+                                    Show Size Chart
+                                </button>
+                                <div class="loungeWearSizeChartDiv">
+                                    <img src="/images/loungeWearSizeChart.jpg" class="loungeWearSizeChart img-fluid"
+                                        alt="">
                                 </div>
+                            </div>
+                            <% } %>
 
-                                <% } %>
-                        </div>
-                        <div class="row productDescription">
-                            <div class="descriptionHeading">Care instructions :</div>
-                            <% for(instruction of itemData.instructions){ %>
 
-                                <div class="descriptionListItem">
-                                    <%= instruction %>
+                                <div class="row waRedirectDiv">
+                                    <a href="" target="_blank" rel="noopener noreferrer" class="waLink"
+                                        data-itemname="<%= itemData.name %>">
+                                        Order on WhatsApp
+                                    </a>
                                 </div>
+                                <div class="row">
+                                    <div class="row productDescription">
+                                        <div class="descriptionHeading">Product Descriptions :</div>
+                                        <p>
+                                            <%= itemData.description %>
+                                        </p>
+                                    </div>
+                                    <div class="row productDescription">
+                                        <div class="descriptionHeading">Product Specification :</div>
+                                        <% for(specs of itemData.specification){ %>
 
-                                <% } %>
-                        </div>
-                        <div class="row productDescription">
-                            <div class="descriptionHeading">Disclaimer :</div>
-                            <p>
-                                <%= itemData.disclaimer %>
-                            </p>
-                        </div>
-                        <div class="row productDescription">
-                            <p>
-                                <%= itemData.endingline %>
-                            </p>
-                        </div>
-                    </div>
+                                            <div class="descriptionListItem">
+                                                <%= specs %>
+                                            </div>
+
+                                            <% } %>
+                                    </div>
+                                    <div class="row productDescription">
+                                        <div class="descriptionHeading">Care instructions :</div>
+                                        <% for(instruction of itemData.instructions){ %>
+
+                                            <div class="descriptionListItem">
+                                                <%= instruction %>
+                                            </div>
+
+                                            <% } %>
+                                    </div>
+                                    <div class="row productDescription">
+                                        <div class="descriptionHeading">Disclaimer :</div>
+                                        <p>
+                                            <%= itemData.disclaimer %>
+                                        </p>
+                                    </div>
+                                    <div class="row productDescription">
+                                        <p>
+                                            <%= itemData.endingline %>
+                                        </p>
+                                    </div>
+                                </div>
                 </div>
             </div>
 

@@ -91,6 +91,26 @@ body {
 	width: fit-content !important;
 }
 
+.SizeChartSection{
+	margin: 15px 0;
+}
+
+#loungeWearSizeChartBtn{
+	border: none;
+	background-color: #febd59;
+	color: black;
+	padding: 10px 15px;
+	border-radius: 10px;
+}
+
+.loungeWearSizeChartDiv{
+	margin-top: 10px;
+}
+
+.loungeWearSizeChart{
+	max-width: 300px;
+}
+
 @media screen and (max-width: 576px) {
 	.subImagesDiv {
 		margin-top: 10px;
