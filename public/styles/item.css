@@ -91,11 +91,11 @@ body {
 	width: fit-content !important;
 }
 
-.SizeChartSection{
+.SizeChartSection {
 	margin: 15px 0;
 }
 
-#loungeWearSizeChartBtn{
+#loungeWearSizeChartBtn {
 	border: none;
 	background-color: #febd59;
 	color: black;
@@ -103,12 +103,8 @@ body {
 	border-radius: 10px;
 }
 
-.loungeWearSizeChartDiv{
+.loungeWearSizeChartDiv {
 	margin-top: 10px;
-}
-
-.loungeWearSizeChart{
-	max-width: 300px;
 }
 
 @media screen and (max-width: 576px) {
