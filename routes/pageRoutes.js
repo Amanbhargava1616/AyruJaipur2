@@ -10,7 +10,7 @@ import { calculateDiscount } from "../public/scripts/calculateDiscount.js"
 
 // class for Non-Sale item for non sale list
 class productData {
-    constructor( ID, name, imgUrl, baseprice, productType, qunatity ) {
+    constructor ( ID, name, imgUrl, baseprice, productType, qunatity ) {
         this.itemId = ID;
         this.itemName = name;
         this.itemImgUrl = imgUrl;
@@ -26,7 +26,7 @@ class productData {
 // class for Sale item for sale list
 // class for specific sale item 
 class saleItemData {
-    constructor( ID, name, imgUrl, baseprice, qunatity, discount, subImgsUrlList, description, specification, instructions, disclaimer, endingline, category ) {
+    constructor ( ID, name, imgUrl, baseprice, qunatity, discount, subImgsUrlList, description, specification, instructions, disclaimer, endingline, category ) {
         this.itemId = ID;
         this.itemName = name;
         this.itemImgUrl = imgUrl;
@@ -49,7 +49,7 @@ class saleItemData {
 // class for specific sale item bedsheet 
 
 class saleBedsheetData {
-    constructor( name, imgUrl, single, queen, king, discount, subImgsUrlList, description, specification, instructions, disclaimer, endingline ) {
+    constructor ( name, imgUrl, single, queen, king, discount, subImgsUrlList, description, specification, instructions, disclaimer, endingline ) {
 
         this.itemName = name;
         this.itemImgUrl = imgUrl;
@@ -244,6 +244,7 @@ router.get( "/collections/:product", async function ( req, res ) {
             .catch( ( er5 ) => {
                 console.error( er5 )
             } );
+        console.log( doc.id +" " +doc.data() )
 
         if ( product == 'bedsheets' ) {
 
