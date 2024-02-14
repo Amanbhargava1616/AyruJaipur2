@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('includes/head',{ title : "Ayru Jaipur - Collections" }) %>
+
+        <!-- item CSS -->
+        <link rel="stylesheet" href="/styles/bedsheet.css">
+
+
+</head>
+
+<body>
+
+    <%- include('includes/header') %>
+
+        <main class="container">
+            <div class="row">
+                <div class="col-lg-6 p-lg-5">
+                    <div class="row">
+                        <div class="col-sm-10 saleItemImagediscountdiv">
+                            <img src="<%= itemData.itemImgUrl %>" alt="<%= itemData.itemName %>" class="itemImage">
+                            <div class="product-card__discount">
+                                Save <%=itemData.discount %> %
+                            </div>
+                        </div>
+                        <div class="col-sm-2 subImagesDiv">
+                            <% for (let subImageURL of itemData.subImgsUrlList) { %>
+                                <div class="subImageDiv">
+                                    <img src="<%= subImageURL %>" alt="hello" class="subImage">
+                                </div>
+                                <% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 p-lg-5">
+                    <h1 class="row itemName productMetaData">
+                        <%= itemData.itemName %>
+                    </h1>
+                    <p class="row itemPriceQuantity productMetaData">
+                        <span class="col-12" id="itemPrice">
+                            <span>
+                                Rs.
+                                <span>
+                                    <%= itemData.queen[2] %>
+                                </span>
+                            </span>
+                            &emsp;
+                            <del>
+                                Rs.
+                                <span>
+                                    <%= itemData.queen[0] %>
+                                </span>
+                            </del>
+                        </span>
+                    </p>
+
+                    <p class="row itemStyle productMetaData">
+                    <div class="row productMetaData">
+                        STYLE
+                    </div>
+                    <div class="row productMetaData">
+                        <button class="col-3 me-2 priceBtn" data-style="single"
+                            data-originalprice="<%=itemData.single[0]%>" data-quantity="<%=itemData.single[1]%>"
+                            data-discountprice="<%=itemData.single[2]%>">
+                            Single <br>(60*90 inch)
+                        </button>
+                        <button class="col-3 me-2 active priceBtn" data-style="queen"
+                            data-originalprice="<%=itemData.queen[0]%>" data-quantity="<%=itemData.queen[1]%>"
+                            data-discountprice="<%=itemData.queen[2]%>">
+                            Queen <br> (90*108 inch)
+                        </button>
+                        <button class="col-3 me-2 priceBtn" data-style="king" data-originalprice="<%=itemData.king[0]%>"
+                            data-quantity="<%=itemData.king[1]%>" data-discountprice="<%=itemData.king[2]%>">
+                            King <br>(108*108 inch)
+                        </button>
+
+                    </div>
+
+                    </p>
+                    <div class="row waRedirectDiv">
+                        <a href="" target="_blank" rel="noopener noreferrer" class="waLink"
+                            data-itemname="<%= itemData.itemName %>">
+                            Order on WhatsApp
+                        </a>
+                    </div>
+                    <div class="row">
+                        <div class="row productDescription">
+                            <div class="descriptionHeading">Product Descriptions :</div>
+                            <p>
+                                <%= itemData.description %>
+                            </p>
+                        </div>
+                        <div class="row productDescription">
+                            <div class="descriptionHeading">Product Specification :</div>
+                            <% for(specs of itemData.specification){ %>
+
+                                <div class="descriptionListItem">
+                                    <%= specs %>
+                                </div>
+
+                                <% } %>
+                        </div>
+                        <div class="row productDescription">
+                            <div class="descriptionHeading">Care instructions :</div>
+                            <% for(instruction of itemData.instructions){ %>
+
+                                <div class="descriptionListItem">
+                                    <%= instruction %>
+                                </div>
+
+                                <% } %>
+                        </div>
+                        <div class="row productDescription">
+                            <div class="descriptionHeading">Disclaimer :</div>
+                            <p>
+                                <%= itemData.disclaimer %>
+                            </p>
+                        </div>
+                        <div class="row productDescription">
+                            <p>
+                                <%= itemData.endingline %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <%- include("includes/footer") %>
+
+            <script src="/scripts/sale-bedsheet.js"></script>
+</body>
+
+</html>

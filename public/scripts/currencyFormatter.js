@@ -1,7 +1,4 @@
-const formatter = new Intl.NumberFormat( undefined, {
-    currency: "INR",
-    style: "currency"
-} )
+const formatter = new Intl.NumberFormat( undefined)
 
 function formateCurrency( value ) {
     return formatter.format( value );

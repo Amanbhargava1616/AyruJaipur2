@@ -27,9 +27,13 @@ body {
 	font-weight: 600;
 }
 
-.size {
+.priceBtn {
 	background: #febd59;
+	border: none;
 	border-radius: 5px;
+}
+
+.active {
 	border: black 1px solid;
 }
 
@@ -89,22 +93,6 @@ body {
 	color: rgb(186, 0, 0);
 	font-weight: 500;
 	width: fit-content !important;
-}
-
-.SizeChartSection {
-	margin: 15px 0;
-}
-
-#loungeWearSizeChartBtn {
-	border: none;
-	background-color: #febd59;
-	color: black;
-	padding: 10px 15px;
-	border-radius: 10px;
-}
-
-.loungeWearSizeChartDiv {
-	margin-top: 10px;
 }
 
 @media screen and (max-width: 576px) {

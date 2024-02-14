@@ -2,16 +2,71 @@
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { collection, doc, getDocs, getDoc, setDoc } from "firebase/firestore";
 
-
-
 // module imports
 import { Router } from "express";
 
 import { formateCurrency } from "../public/scripts/currencyFormatter.js"
+import { calculateDiscount } from "../public/scripts/calculateDiscount.js"
+
+// class for Non-Sale item for non sale list
+class productData {
+    constructor ( ID, name, imgUrl, baseprice, productType, qunatity ) {
+        this.itemId = ID;
+        this.itemName = name;
+        this.itemImgUrl = imgUrl;
+        this.itemPrice = formateCurrency( baseprice );
+        this.itemAvaibility = parseInt( qunatity );
+        this.productType = productType;
+
+        return this;
+    }
+}
 
 
-// importing multer
-// import multer, { diskStorage } from "multer";
+// class for Sale item for sale list
+// class for specific sale item 
+class saleItemData {
+    constructor ( ID, name, imgUrl, baseprice, qunatity, discount, subImgsUrlList, description, specification, instructions, disclaimer, endingline, category ) {
+        this.itemId = ID;
+        this.itemName = name;
+        this.itemImgUrl = imgUrl;
+        this.itemPrice = formateCurrency( baseprice );
+        this.itemAvaibility = parseInt( qunatity );
+        this.discount = parseInt( discount );
+        this.discountPrice = formateCurrency( ( 1 - this.discount * 0.01 ) * parseFloat( baseprice ) )
+        this.subImgsUrlList = subImgsUrlList
+        this.description = description
+        this.instructions = instructions
+        this.specification = specification
+        this.disclaimer = disclaimer
+        this.endingline = endingline
+        this.category = category
+
+        return this;
+    }
+}
+
+// class for specific sale item bedsheet 
+
+class saleBedsheetData {
+    constructor ( name, imgUrl, single, queen, king, discount, subImgsUrlList, description, specification, instructions, disclaimer, endingline ) {
+
+        this.itemName = name;
+        this.itemImgUrl = imgUrl;
+
+        // inserting discount price in arrays
+        single.push( formateCurrency( ( 1 - discount * 0.01 ) * parseFloat( single[ 0 ] ) ) )
+        queen.push( formateCurrency( ( 1 - discount * 0.01 ) * parseFloat( queen[ 0 ] ) ) )
+        king.push( formateCurrency( ( 1 - discount * 0.01 ) * parseFloat( king[ 0 ] ) ) )
+
+        // formating the original price
+        single[ 0 ] = formateCurrency( single[ 0 ] );
+        queen[ 0 ] = formateCurrency( queen[ 0 ] );
+        king[ 0 ] = formateCurrency( king[ 0 ] );
+
+        return { ...this, single, queen, king, subImgsUrlList, description, specification, instructions, disclaimer, endingline, discount };
+    }
+}
 
 
 const router = Router();
@@ -19,19 +74,6 @@ const router = Router();
 
 // connection to database and firestore cloud
 import imports from "../database/firebaseConfig.js";
-
-
-
-// configrating multer to specify the storage loaction of file
-// const storageConfig = diskStorage( {
-//     destination: function ( req, file, cb ) {
-//         cb( null, 'public/images' );
-//     }
-// } )
-
-
-// intializing multer
-// const upload = multer( { storage: storageConfig } )       // this helps to access the image in the comming request
 
 
 // redirecting to landing Page
@@ -46,12 +88,21 @@ router.get( "/home", async function ( req, res ) {                              
 
 
     const docRefHome = doc( imports.db, "ayruJaipur", "homepage" );
+    const clientReviewRef = await getDocs( collection( imports.db, "clientlove" ) );
     const docSnapHome = await getDoc( docRefHome );
+
+
 
     if ( docSnapHome.exists() ) {
 
+        const clientReview = await Promise.all( clientReviewRef.docs.map( async ( doc ) => {
+
+            return { ...doc.data(), clientName: doc.id }
+        } ) );
+        console.log( clientReview )
+
         console.log( "Document data:", docSnapHome.data() );
-        res.render( 'home', { homepageList: docSnapHome.data() } )
+        res.render( 'home', { homepageList: docSnapHome.data(), clientreviewList: clientReview } )
 
     } else {
         // doc.data() will be undefined in this case
@@ -68,16 +119,13 @@ router.post( "/register", async function ( req, res ) {
 
     console.table( toBeRegister_UserData )
 
-    // imports.db.collection( "registeredUsers" ).doc( toBeRegister_UserData.emailID ).set( toBeRegister_UserData )
-
     await setDoc( doc( imports.db, "registeredUsers", toBeRegister_UserData.emailID ), toBeRegister_UserData ).then( () => {
         console.log( "User Added successfully !" );
 
         res.redirect( '/home' )
-    } )
-        .catch( ( er1 ) => {
-            console.error( "Error Updating document: ", er1 );
-        } );
+    } ).catch( ( er1 ) => {
+        console.error( "Error Updating document: ", er1 );
+    } );
 
 } )
 
@@ -86,6 +134,7 @@ router.post( "/register", async function ( req, res ) {
 router.get( "/clientLove", function ( req, res ) {
 
 
+    // reference to client love bucket 
     const listRefClientLove = ref( imports.storage, 'client love' );
 
     listAll( listRefClientLove )
@@ -100,9 +149,10 @@ router.get( "/clientLove", function ( req, res ) {
 
                         return url;
                     } )
-                    .catch( ( er5 ) => {
-                        console.error( er5 )
+                    .catch( ( er2 ) => {
+                        console.error( er2 )
                     } );
+
                 return clientLoveUrl;
             } ) )
             console.log( clientLoveImagesList );
@@ -110,9 +160,9 @@ router.get( "/clientLove", function ( req, res ) {
             res.render( 'clientLove', { clientLoveImagesList: clientLoveImagesList } );
 
 
-        } ).catch( ( er4 ) => {
+        } ).catch( ( er3 ) => {
 
-            console.error( er4 )
+            console.error( er3 )
             res.render( '500' )
 
         } );
@@ -120,17 +170,50 @@ router.get( "/clientLove", function ( req, res ) {
 
 
 
+// rendering page for sale items
+router.get( "/discounted-items", async function ( req, res ) {
 
 
-// rendering collections page
-router.get( "/collections", function ( req, res ) {
-    res.render( "collections" );
+    const saleSnapshot = await getDocs( collection( imports.db, 'sale' ) );
+
+    const saleItemList = await Promise.all( saleSnapshot.docs.map( async ( doc ) => {
+        // doc.data() is never undefined for query doc snapshots
+
+        const saleItemCategory = doc.data().itemref[ '_key' ].path.segments[ 5 ];
+
+        var saleItemSnap = await getDoc( doc.data().itemref );
+
+        // reference to bucket/image.jpg
+        const imgRefSaleItem = ref( imports.storage, saleItemCategory + "/" + saleItemSnap.id );
+        const imgURLSaleItem = await getDownloadURL( imgRefSaleItem )
+            .then( ( url ) => {
+                // `url` is the download URL for 'images/stars.jpg'
+
+                return url;
+            } )
+            .catch( ( er4 ) => {
+                console.error( er4 )
+            } );
+
+
+
+        if ( saleItemCategory == 'bedsheets' ) {
+
+            // calculating the total of no. of single ,queen ,king size bedsheets
+            var totalSaleItemQuantity = parseInt( saleItemSnap.data().single[ 1 ] ) + parseInt( saleItemSnap.data().queen[ 1 ] ) + parseInt( saleItemSnap.data().king[ 1 ] )
+
+            return new saleItemData( doc.id, saleItemSnap.data().name, imgURLSaleItem, saleItemSnap.data().baseprice, totalSaleItemQuantity, doc.data().discount )
+
+        } else
+            return new saleItemData( doc.id, saleItemSnap.data().name, imgURLSaleItem, saleItemSnap.data().baseprice, saleItemSnap.data().quantity, doc.data().discount )
+
+    } ) );
+
+    console.log( saleItemList );
+
+    res.render( "products", { list: saleItemList.filter( item => item.itemImgUrl != undefined ), product: 'Sale' } );
+
 } )
-
-router.get( "/discounted-items", function ( req, res ) {
-    
-} )
-
 
 
 
@@ -141,79 +224,161 @@ router.get( "/collections/:product", async function ( req, res ) {
 
 
     // reading all the data of products in db
-    const docSnap = await getDoc( doc( imports.db, "ayruJaipur", product ) );
-    if ( docSnap.exists() ) {
+    const querySnapshot = await getDocs( collection( imports.db, product ) );
 
-        console.table( docSnap.data() );
+    const ProductDataList = await Promise.all( querySnapshot.docs.map( async ( doc ) => {
 
-    } else {
-        console.log( "No such document!" );
-    }
+        const productType = ( product == "newArrivals" || product == "bestSellers" ? doc.data().itemref[ '_key' ].path.segments[ 5 ] : product )
 
+        if ( product == "newArrivals" || product == "bestSellers" ) {
+            doc = await getDoc( doc.data().itemref );
+        }
 
+        const imgRefProduct = ref( imports.storage, productType + "/" + doc.id );
+        const imgURLProduct = await getDownloadURL( imgRefProduct )
+            .then( ( url ) => {
+                // `url` is the download URL for 'images/stars.jpg'
 
-    // reference to a bucket in cloud storage
-    const storageRef = ref( imports.storage, product );
+                return url;
+            } )
+            .catch( ( er5 ) => {
+                console.error( er5 )
+            } );
+        console.log( doc.id + " " + doc.data() )
 
+        if ( product == 'bedsheets' ) {
 
-    // array of objects of all the images in bucket
-    const itemList = await listAll( storageRef )
-        .then( async ( imgRef ) => {
+            // calculating the total of no. of single ,queen ,king size bedsheets
+            var totalQuantityAvailable = parseInt( doc.data().king[ 1 ] ) + parseInt( doc.data().queen[ 1 ] ) + parseInt( doc.data().single[ 1 ] )
 
-            const imgArr = await Promise.all( imgRef.items.map( async ( itemRef ) => {
+            return new productData( doc.id, doc.data().name, imgURLProduct, doc.data().baseprice, productType, totalQuantityAvailable )
 
+        }
+        else
+            return new productData( doc.id, doc.data().name, imgURLProduct, doc.data().baseprice, productType, doc.data().quantity )
 
-                const imgData = await getDownloadURL( itemRef )
-                    .then( async ( imgUrl ) => {
+    } ) );
 
-                        const item = docSnap.data()[ itemRef.name ]
-                        // console.log( itemRef.name + " => " + imgUrl );
-                        // console.table( item );
-                        let totalQuantityAvailable = parseInt( item[ 'king' ][ 1 ] ) + parseInt( item[ 'queen' ][ 1 ] ) + parseInt( item[ 'single' ][ 1 ] )
+    console.log( ProductDataList );
 
-                        return ( { itemId: itemRef.name, itemName: item.name, itemImgUrl: imgUrl, itemPrice: formateCurrency( item.baseprice ), itemAvaibility: totalQuantityAvailable } )
+    res.render( "products", { list: ProductDataList.filter( item => item.itemImgUrl != undefined ), product: product } );
 
-                        // return ( { imgID: itemRef.name, itemImgUrl: imgUrl } )
-
-
-
-                    } )
-                    .catch( ( error ) => {
-                        console.error( error )
-                    } );
-                return imgData;
-
-            } ) )
-            // console.log( imgArr );
-            return imgArr;
-
-
-        } ).catch( ( er2 ) => {
-            console.error( er2 );
-        } );
-
-    console.table( itemList );
-
-    res.render( "products", { list: itemList, product: product } );
 } )
 
 
-// specific product
+// specific non sale product for bedsheet
+router.get( "/collections/bedsheets/product/:item", async function ( req, res ) {
+
+    const bedsheetID = req.params.item;
+
+    // reading all the data of products in db
+    const bedsheetRef = doc( imports.db, 'bedsheets', bedsheetID );
+    const bedsheetSnap = await getDoc( bedsheetRef );
+
+    // reference to a bucket in cloud storage
+    const imgRef = ref( imports.storage, 'bedsheets' + "/" + bedsheetID );
+    const imgURL = await getDownloadURL( imgRef )
+        .then( ( url ) => {
+
+
+            // console.log( url );
+            return url;
+        } )
+        .catch( ( er6 ) => {
+            console.error( er6 )
+        } );
+
+    const subImgsRef = ref( imports.storage, `bedsheets/${bedsheetID}` );
+
+    const subImgsUrlList = await listAll( subImgsRef )
+        .then( async res => {
+
+            return await Promise.all( res.items.map( async ( subImageRef ) => {
+
+                return await getDownloadURL( subImageRef );
+            } ) )
+
+        } ).catch( ( er8 ) => {
+            console.error( er8 )
+        } )
+    // console.log( subImgsUrlList )
+
+    const bedsheetData = { ...bedsheetSnap.data(), url: imgURL, subImgsUrlList: subImgsUrlList };
+
+    bedsheetData.single[ 0 ] = formateCurrency( bedsheetData.single[ 0 ] )
+    bedsheetData.queen[ 0 ] = formateCurrency( bedsheetData.queen[ 0 ] )
+    bedsheetData.king[ 0 ] = formateCurrency( bedsheetData.king[ 0 ] )
+
+    console.log( bedsheetData );
+
+    res.render( 'bedsheet', { itemData: bedsheetData } )
+
+} );
+
+
+router.get( "/collections/sale/product/:item", async function ( req, res ) {
+
+    const saleItemID = req.params.item;
+
+
+    // reference and data of the sale item 
+    const saleItemDocRef = doc( imports.db, 'sale', saleItemID );
+    const saleItemDocSnap = await getDoc( saleItemDocRef );
+
+    // item category
+    const saleItemCategory = saleItemDocSnap.data().itemref[ '_key' ].path.segments[ 5 ];
+
+    // data of the item
+    var saleItemSnap = await getDoc( saleItemDocSnap.data().itemref );
+
+
+    // reference to a bucket in cloud storage
+    const saleImgRef = ref( imports.storage, saleItemCategory + "/" + saleItemSnap.id );
+    const saleImgURL = await getDownloadURL( saleImgRef );
+
+    // reference to bucket in for sub images
+    const subImgsRef = ref( imports.storage, `${saleItemCategory}/${saleItemSnap.id}` );
+
+    const subImgsUrlList = await listAll( subImgsRef )
+        .then( async res => {
+
+            return await Promise.all( res.items.map( async ( subImageRef ) => {
+
+                return await getDownloadURL( subImageRef );
+            } ) )
+
+        } ).catch( ( er9 ) => {
+            console.error( er9 )
+        } )
+    // console.log( subImgsUrlList )
+
+
+    if ( saleItemCategory == 'bedsheets' ) {
+
+        const salebedsheetData = new saleBedsheetData( saleItemSnap.data().name, saleImgURL, saleItemSnap.data().single, saleItemSnap.data().queen, saleItemSnap.data().king, saleItemDocSnap.data().discount, subImgsUrlList, saleItemSnap.data().description, saleItemSnap.data().specification, saleItemSnap.data().instructions, saleItemSnap.data().disclaimer, saleItemSnap.data().endingline )
+        console.log( salebedsheetData )
+        res.render( 'sale-bedsheet', { itemData: salebedsheetData } )
+    } else {
+
+        const saleData = new saleItemData( saleItemSnap.id, saleItemSnap.data().name, saleImgURL, saleItemSnap.data().baseprice, saleItemSnap.data().quantity, saleItemDocSnap.data().discount, subImgsUrlList, saleItemSnap.data().description, saleItemSnap.data().specification, saleItemSnap.data().instructions, saleItemSnap.data().disclaimer, saleItemSnap.data().endingline, saleItemCategory )
+        console.log( saleData )
+        res.render( 'sale-item', { itemData: saleData } )
+
+    }
+
+
+} )
+
+
+// specific none sale product for category { bedcover ,quilt ,dohar}
 router.get( "/collections/:category/product/:item", async function ( req, res ) {
 
     const itemID = req.params.item;
     const category = req.params.category;
 
     // reading all the data of products in db
-    const docSnap = await getDoc( doc( imports.db, "ayruJaipur", category ) );
-    if ( docSnap.exists() ) {
-        console.table( docSnap.data()[ itemID ] );
-
-    } else {
-        console.log( "No such document!" );
-    }
-
-
+    const itemRef = doc( imports.db, category, itemID );
+    const itemSnap = await getDoc( itemRef );
 
     // reference to a bucket in cloud storage
     const imgRef = ref( imports.storage, category + "/" + itemID );
@@ -224,21 +389,35 @@ router.get( "/collections/:category/product/:item", async function ( req, res ) 
             // console.log( url );
             return url;
         } )
-        .catch( ( er3 ) => {
-            console.error( er3 )
+        .catch( ( er7 ) => {
+            console.error( er7 )
         } );
 
-    const itemData = { ...docSnap.data()[ itemID ], url: imgURL };
+    const subImgsRef = ref( imports.storage, `${category}/${itemID}` );
 
-    itemData.single[ 0 ] = formateCurrency( itemData.single[ 0 ] )
-    itemData.queen[ 0 ] = formateCurrency( itemData.queen[ 0 ] )
-    itemData.king[ 0 ] = formateCurrency( itemData.king[ 0 ] )
+    const subImgsUrlList = await listAll( subImgsRef )
+        .then( async res => {
+
+            return await Promise.all( res.items.map( async ( subImageRef ) => {
+
+                return await getDownloadURL( subImageRef );
+            } ) )
+
+        } ).catch( ( er10 ) => {
+            console.error( er10 )
+        } )
+    // console.log( subImgsUrlList )
+
+    const itemData = { ...itemSnap.data(), url: imgURL, subImgsUrlList: subImgsUrlList, category: category };
+
+    itemData.baseprice = formateCurrency( itemData.baseprice );
 
     console.log( itemData );
 
     res.render( 'item', { itemData: itemData } )
 
 } );
+
 
 
 
@@ -263,6 +442,30 @@ router.get( "/Shipping", async function ( req, res ) {
 } );
 
 
+// about us page
+router.get( "/about-Us", async function ( req, res ) {
+
+    res.render( 'aboutUs' );
+} );
+
+
+// contact us page
+router.get( "/contact-Us", async function ( req, res ) {
+
+    res.render( 'contactPage' );
+} );
+
+// terms of service
+router.get( "/terms-of-service", async function ( req, res ) {
+
+    res.render( 'termsOfService' );
+} );
+
+// privacy policy
+router.get( "/privacy-policy", async function ( req, res ) {
+
+    res.render( 'privacyPolicy' );
+} );
 
 
 export { router };

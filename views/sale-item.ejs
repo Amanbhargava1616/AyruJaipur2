@@ -7,8 +7,6 @@
         <!-- item CSS -->
         <link rel="stylesheet" href="/styles/item.css">
 
-        <!-- bootstrap bundle js -->
-        <script src="/scripts/bootstrap.bundle.min.js"></script>
 
 </head>
 
@@ -18,10 +16,13 @@
 
         <main class="container">
             <div class="row">
-                <div class="col-lg-6 p-lg-5">
+                <div class="col-lg-6 p-lg-5 ">
                     <div class="row">
-                        <div class="col-sm-10">
-                            <img src="<%= itemData.url %>" alt="<%= itemData.name %>" class="itemImage">
+                        <div class="col-sm-10 saleItemImagediscountdiv">
+                            <img src="<%= itemData.itemImgUrl %>" alt="<%= itemData.itemName %>" class="itemImage">
+                            <div class="product-card__discount">
+                                Save <%=itemData.discount %> %
+                            </div>
                         </div>
                         <div class="col-sm-2 subImagesDiv">
                             <% for (let subImageURL of itemData.subImgsUrlList) { %>
@@ -31,23 +32,27 @@
                                 <% } %>
                         </div>
                     </div>
+
                 </div>
-                <div class="col-lg-6 p-lg-5 ">
+                <div class="col-lg-6 p-lg-5">
                     <h1 class="row itemName productMetaData">
-                        <%= itemData.name %>
+                        <%= itemData.itemName %>
                     </h1>
                     <p class="row itemPriceQuantity productMetaData">
                         <span class="col-12" id="itemPrice">
-                            Rs. <%= itemData.baseprice %>
+                            Rs. <%= itemData.discountPrice %>
+                                &emsp;
+                                <del>
+                                    Rs. <%= itemData.itemPrice %>
+                                </del>
                         </span>
                     </p>
-
                     <% if( itemData.category=='bedcovers' || itemData.category=='quilts' ) { %>
                         <p class="row itemStyle productMetaData">
-                        <div class="row productMetaData" style="font-size: 1.15rem; font-weight:500;">
+                        <div class="row productMetaData">
                             STYLE
                         </div>
-                        <div class=" row productMetaData">
+                        <div class="row productMetaData">
                             <div class="col-3 size">
                                 Size <br>(90*108 inch)
                             </div>
@@ -68,7 +73,7 @@
 
                                 <div class="row waRedirectDiv">
                                     <a href="" target="_blank" rel="noopener noreferrer" class="waLink"
-                                        data-itemname="<%= itemData.name %>">
+                                        data-itemname="<%= itemData.itemName %>">
                                         Order on WhatsApp
                                     </a>
                                 </div>

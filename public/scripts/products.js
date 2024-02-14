@@ -14,4 +14,4 @@ $( function () {
             $( ".js-col" ).attr( "class", "js-col col-sm-6 col-12 col-lg-3" )
         }
     } )
-} )
+} ) 

@@ -17,6 +17,7 @@
 
 <body>
 
+
     <%- include('includes/header') %>
 
 
@@ -25,54 +26,45 @@
 
             <!-- Slider { Slick } -->
             <div class="your-class section">
-                <div>
-                    <img src="/images/HandPrint.jpg" alt="HandPrint" class="slider-images img-fluid">
-                </div>
-                <div>
-                    <img src="/images/HandPrintLogo.jpg" alt="HandPrintLogo" class="slider-images img-fluid">
-                </div>
-
+                <% for(let carouselImage of homepageList.carousel) {%>
+                    <div>
+                        <img src="<%= carouselImage %>" alt="HandPrintLogo" class="slider-images img-fluid">
+                    </div>
+                    <% } %>
             </div>
 
 
 
-            <div class="section info-section">
+            <div class="section info-section" id="aboutUs">
 
                 <!-- description of ayru jaipur -->
                 <div class="description-Section">
-                    <div class="row">
-                        <p class="description-Section-main-heading">AYRU JAIPUR WELCOME'S YOU</p>
-                    </div>
                     <div class="description-Section-heart-logo">
                         <img src="/images/Webpage_Logo.jpg" alt="Logo" srcset="" class="img-fluid">
-                        <i class="fa-regular fa-heart"></i>
                     </div>
+
+                    <p class="description-text">
+                        Let the "AYRU JAIPUR" Bedlinens is your partner for sleep and style of furnishing.
+                        We use finest quality of cotton which ensure comfort, durability and easy care.
+                        Our products were carefully selected to give you the best, well finished and perfect harmony of
+                        rich color makes the product more beautiful.
+                        Each piece comes with an authenticity of Handblock print designs made in Jaipur ,Rajasthan
+                        ,India.
+                    </p>
                 </div>
+
 
                 <!-- Best and Newest Products -->
                 <div class="products_div row justify-content-evenly">
-                    <div class="best_products products-sub-div col-md-5"
-                        style="background-image: url('<%=homepageList.bestseller %>');">
-                        <img src="<%=homepageList.bestseller %>" style="visibility: hidden;" class="img-fluid" />
-                        <a href="/collections/best-seller" target="_self" rel="noopener noreferrer">
-                            <div>
-                                <button>
-                                    Best Seller
-                                </button>
-                            </div>
-                        </a>
+                    <!-- <div class="best_products products-sub-div col-md-5"
+                        style="background-image: url('../images/freeShipping.jpg');">
+                        <img src="../images/freeShipping.jpg" style="visibility: hidden;" class="img-fluid" />
                     </div>
                     <div class="new_products products-sub-div col-md-5"
-                        style="background-image: url('<%=homepageList.justlaunched %>');">
-                        <img src="<%=homepageList.justlaunched %>" style="visibility: hidden;" class="img-fluid" />
-                        <a href="/collections/just-launched" target="_self" rel="noopener noreferrer">
-                            <div>
-                                <button>
-                                    Just Launched
-                                </button>
-                            </div>
-                        </a>
-                    </div>
+                        style="background-image: url('../images/worldWideShipping.jpg');">
+                        <img src="../images/worldWideShipping.jpg" style="visibility: hidden;" class="img-fluid" />
+                    </div> -->
+                    <img src="../images/worldWideFreeShipping.jpg" class="img-fluid" style="max-width: 600px;" />
                 </div>
             </div>
 
@@ -119,7 +111,7 @@
                     <div class="new_products products-sub-div col-md-5"
                         style="background-image: url('<%=homepageList.dohar %>');">
                         <img src="<%=homepageList.dohar %>" style="visibility: hidden;" class="img-fluid" />
-                        <a href="/collections/just-launched" target="_self" rel="noopener noreferrer">
+                        <a href="/collections/dohars" target="_self" rel="noopener noreferrer">
                             <div>
                                 <button>
                                     Dohar
@@ -131,37 +123,51 @@
             </div>
 
 
-
-            <div class="section">
+            <!-- client love -->
+            <div class="section" id="clientLove">
 
                 <div class="row text-center">
                     <h1 class="homeHeading">
                         Client Love
                     </h1>
                 </div>
-                <div class="row text-center clientLove_text ">
-                    A corner of loveliness, Indeed! #ClientHome Keep Spreading the Love<i
-                        class="fa-solid fa-heart fa-heart-clientlove fa-beat" style="color: #ff3d3d;"></i>
+                <div class="row">
+                    <a href="/clientLove" target="_self" rel="noopener noreferrer" class="col-lg-4 col-md-6 col-12">
+                        <img src="<%= homepageList.clientlove[0] %>" alt="" srcset="" class="clientLove_img img-fluid">
+                    </a>
+                    <a href="/clientLove" target="_self" rel="noopener noreferrer" class="col-lg-4 col-md-6 col-12">
+                        <img src="<%= homepageList.clientlove[1] %>" alt="" srcset="" class="clientLove_img img-fluid">
+                    </a>
+                    <a href="/clientLove" target="_self" rel="noopener noreferrer" class="col-lg-4 clientLoveTohide">
+                        <img src="<%= homepageList.clientlove[2] %>" alt="" srcset="" class="clientLove_img img-fluid">
+                    </a>
                 </div>
                 <div class="row">
-                    <a href="/clientLove" target="_self" rel="noopener noreferrer" class="col-lg-3 col-md-6 col-12">
-                        <img src="<%=homepageList.bestseller %>" alt="" srcset="" class="clientLove_img img-fluid">
-                    </a>
-                    <a href="/clientLove" target="_self" rel="noopener noreferrer" class="col-lg-3 col-md-6 col-12">
-                        <img src="<%=homepageList.bestseller %>" alt="" srcset="" class="clientLove_img img-fluid">
-                    </a>
-                    <a href="/clientLove" target="_self" rel="noopener noreferrer" class="col-lg-3 col-md-6 col-12">
-                        <img src="<%=homepageList.bestseller %>" alt="" srcset="" class="clientLove_img img-fluid">
-                    </a>
-                    <a href="/clientLove" target="_self" rel="noopener noreferrer" class="col-lg-3 col-md-6 col-12">
-                        <img src="<%=homepageList.bestseller %>" alt="" srcset="" class="clientLove_img img-fluid">
-                    </a>
+                    <div class="autoplayClientLoveSlick">
+                        <% for(let clientreview of clientreviewList) {%>
+                            <div class="clientLoveReviewBox">
+                                <!-- <h2>Client Review</h2> -->
+                                <p class="customer_review">
+                                    <%= clientreview.review %>
+                                </p>
+                                <div class="ratingDiv">
+
+                                    <% for(var i=0;i<parseInt(clientreview.rating);i++){ %>
+                                        <li class="rated"></li>
+                                        <% } %>
+                                            <% for( i;i<parseInt('5');i++){ %>
+                                                <li></li>
+                                                <% } %>
+                                </div>
+                                <h4>
+                                    <%= clientreview.clientName %>
+                                </h4>
+                            </div>
+                            <% } %>
+
+                    </div>
                 </div>
             </div>
-
-
-
-
 
         </main>
 

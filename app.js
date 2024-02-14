@@ -48,12 +48,12 @@ const views_path = join( __dirname, 'views' )
 // app.use( cookieParser() )
 
 
-app.set( 'view engine', 'ejs' );       // Activate ejs engine
+app.set( 'view engine', 'ejs' );   
 app.set( 'views', views_path );
 
 
-app.use( urlencoded( { extended: true } ) );      // Parse incoming request bodies
-app.use( express.static( 'public' ) );   // Serve static files (e.g. CSS , JS)
+app.use( urlencoded( { extended: true } ) );     
+app.use( express.static( 'public' ) );   
 
 
 app.use( router );

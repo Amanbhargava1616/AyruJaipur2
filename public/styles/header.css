@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap");
 
 :root {
-	--mainColor: #ffcd54;
 	--mainHoverColor: #ffb60d;
 	--logoColor: #febd59;
 }
@@ -22,10 +21,6 @@ header {
 	margin: 0px !important;
 }
 
-/* .site-header__logo {
-	width: fit-content !important;
-} */
-
 .site-header__logo img {
 	width: 100px;
 	border-radius: 50%;
@@ -33,7 +28,7 @@ header {
 
 .site-header__logo-link {
 	text-decoration: none;
-	color: var(--mainColor);
+	color: var(--logoColor);
 	transition: all 0.7s;
 }
 
@@ -43,7 +38,7 @@ header {
 }
 
 #menu_button {
-	color: var(--mainColor);
+	color: var(--logoColor);
 	border: none;
 	display: flex;
 	align-items: center;
@@ -68,7 +63,7 @@ header {
 	border-radius: 1px;
 	height: 2.5px;
 	width: 18px;
-	background-color: var(--mainColor);
+	background-color: var(--logoColor);
 }
 
 .second_menu_bar {
@@ -85,7 +80,7 @@ header {
 	border-radius: 5px;
 	padding: 5px 10px;
 	transition: all 0.7s;
-	color: var(--mainColor);
+	color: var(--logoColor);
 	background-color: transparent;
 	font-weight: 600;
 }
@@ -120,7 +115,7 @@ header {
 }
 
 .modalheading {
-	color: var(--mainColor);
+	color: var(--logoColor);
 	font-size: 1.5rem;
 	font-weight: 700;
 }
@@ -141,6 +136,72 @@ header {
 .modalbody input:focus {
 	border: transparent !important;
 	border-bottom: #bbb solid 1px;
+}
+
+#registrationSubmitBtn {
+	border: 2px solid #ffb60d;
+	background-color: transparent;
+	color: #ffb60d;
+	font-size: 1.15rem;
+	padding: 10px 15px;
+	border-radius: 10px;
+	transition: all 500ms;
+}
+
+#registrationSubmitBtn:hover {
+	background-color: #febd59;
+	color: #fff5e6;
+}
+
+#sidebar {
+	background-color: #febd59;
+}
+
+.site-nav {
+	list-style-type: none;
+}
+
+.site-nav li {
+	padding: 10px 0;
+}
+
+.site-nav li a {
+	color: black;
+	text-decoration: none;
+	font-size: 1rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	transition: all 400ms;
+}
+
+.site-nav li a:hover {
+	color: #f86808;
+}
+
+.waIcon {
+	position: fixed;
+	width: 70px;
+	height: 70px;
+	bottom: 40px;
+	right: 40px;
+	background: linear-gradient(
+		90deg,
+		rgb(18, 198, 101) 0.85%,
+		rgb(0, 148, 70) 100%
+	);
+	color: #fff;
+	border-radius: 50px;
+	text-align: center;
+	font-size: 40px;
+	box-shadow: 2px 2px 3px #999;
+	z-index: 100;
+	display: grid;
+	place-content: center;
+	text-decoration: none;
+}
+
+.waIcon:hover {
+	color: white;
 }
 
 @media screen and (min-width: 768px) {
