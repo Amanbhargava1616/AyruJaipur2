@@ -211,7 +211,7 @@ router.get( "/discounted-items", async function ( req, res ) {
 
     console.log( saleItemList );
 
-    res.render( "products", { list: saleItemList, product: 'Sale' } );
+    res.render( "products", { list: saleItemList.filter( item => item.itemImgUrl != undefined ), product: 'Sale' } );
 
 } )
 
@@ -244,7 +244,7 @@ router.get( "/collections/:product", async function ( req, res ) {
             .catch( ( er5 ) => {
                 console.error( er5 )
             } );
-        console.log( doc.id +" " +doc.data() )
+        console.log( doc.id + " " + doc.data() )
 
         if ( product == 'bedsheets' ) {
 
@@ -261,7 +261,7 @@ router.get( "/collections/:product", async function ( req, res ) {
 
     console.log( ProductDataList );
 
-    res.render( "products", { list: ProductDataList, product: product } );
+    res.render( "products", { list: ProductDataList.filter( item => item.itemImgUrl != undefined ), product: product } );
 
 } )
 

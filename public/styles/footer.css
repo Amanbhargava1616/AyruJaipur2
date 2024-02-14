@@ -10,7 +10,7 @@
 footer {
 	padding: 50px 0;
 	color: var(--textColor);
-	background-color: #fec062;
+	background-color: #feb850;
 }
 
 footer a {
@@ -59,6 +59,6 @@ footer ul li > a {
 
 @media screen and (max-width: 768px) {
 	footer {
-		background-color: #fdcd85;
+		background-color: #ffbf60;
 	}
 }
